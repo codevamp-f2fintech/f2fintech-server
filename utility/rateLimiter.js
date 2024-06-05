@@ -6,17 +6,23 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 
 const Utility = require("./index");
+
+const maxRequests = 500;
 /** Middleware to control the rate at which users can send requests to the server
-  */
+ */
+
 const rateLimiter = rateLimit({
-  windowMs: 60 * 1000,     // 1 minute in milliseconds
-  max: 500,
-  message: Utility.formatResponse(429, "You have exceeded 500 requests per minute limit!"),
+  windowMs: 60 * 1000, // 1 minute in milliseconds
+  max: maxRequests,
+  message: Utility.formatResponse(
+    429,
+    `You have exceeded ${maxRequests} requests per minute limit!`
+  ),
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 module.exports = rateLimiter;
