@@ -13,8 +13,8 @@ const Utility = require("../utility");
 
 passport.use(
   "local",
-  new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-    CustomerModel.findOne({ where: { email } })
+  new LocalStrategy({ usernameField: "contact" }, (contact, password, done) => {
+    CustomerModel.findOne({ where: { contact } })
       .then((customer) => {
         if (!customer) {
           return done(null, false, { message: "Customer not found" });

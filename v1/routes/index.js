@@ -21,10 +21,10 @@ router.get("/test", (req, res) => {
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create", CustomerController.register);
 
-router.patch("/update", CustomerController.updateCustomer);
+router.patch("/update", checkAuthenticated, CustomerController.updateCustomer);
 
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 
-router.post("/login", CustomerController.loginPassport);
+router.post("/login", CustomerController.loginCustomer);
 
 module.exports = router;
