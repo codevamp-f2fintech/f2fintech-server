@@ -9,10 +9,12 @@
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+const session = require("express-session");
 
 const config = require("./config");
 const rateLimiter = require("./utility/rateLimiter");
 const v1Routes = require("./v1/routes");
+const { passport, checkAuthenticated } = require("./config/passportConfig");
 
 let { connectToMysql } = require("./db");
 
@@ -35,6 +37,16 @@ app.use(
 
 app.use(cors(corsOptions));
 app.use(rateLimiter);
+
+app.use(
+  session({
+    secret: config.SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/v1", v1Routes);
 
