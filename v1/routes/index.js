@@ -8,6 +8,10 @@
 
 const express = require("express");
 
+const LoanProviderController = require("../../controller/loan_provider");
+
+const LoanProviderController = require("../../controller/loan_provider");
+
 const { formatResponse, verifyToken } = require("../../utility");
 const CustomerController = require("../../controller/customer");
 const { checkAuthenticated } = require("../../config/passportConfig");
@@ -17,6 +21,11 @@ const router = express.Router();
 router.get("/test", (req, res) => {
   res.status(200).send(formatResponse(200, "API Working Fine."));
 });
+
+//-----------------------------------LOANPROVIDER---------------------------------------
+router.get('/get-loan-provider', LoanProviderController.getLoanProvider);
+router.post('/create-loan-provider', LoanProviderController.createLoanProvider);
+
 
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create", CustomerController.register);
