@@ -32,4 +32,20 @@ router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 
 router.post("/login", CustomerController.loginCustomer);
 
+//-----------------------------------LOAN APPLICATION---------------------------------------
+router.post(
+  "/create-loanapplication",
+  LoanApplicationController.createLoanApplication
+);
+
+router.get(
+  "/get-loanapplication",
+  LoanApplicationController.getLoanApplication
+);
+
+router.get(
+  "/get-loanapplication/:id",
+  LoanApplicationController.getLoanApplicationById
+);
+
 module.exports = router;
