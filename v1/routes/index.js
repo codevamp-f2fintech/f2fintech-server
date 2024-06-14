@@ -10,6 +10,7 @@ const express = require("express");
 
 const { formatResponse, verifyToken } = require("../../utility");
 const CustomerController = require("../../controller/customer");
+const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const router = express.Router();
 
@@ -19,9 +20,13 @@ router.get("/test", (req, res) => {
 });
 
 //-----------------------------------CUSTOMER---------------------------------------
-router.post("/create", CustomerController.register);
+router.post("/create-customer", CustomerController.register);
 
-router.patch("/update", checkAuthenticated, CustomerController.updateCustomer);
+router.patch(
+  "/update-customer",
+  checkAuthenticated,
+  CustomerController.updateCustomer
+);
 
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 
