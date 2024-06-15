@@ -10,6 +10,7 @@ const express = require("express");
 
 const { formatResponse, verifyToken } = require("../../utility");
 const CustomerController = require("../../controller/customer");
+const FavouriteApiController = require("../../controller/favourite_api");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const router = express.Router();
 
@@ -27,4 +28,7 @@ router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 
 router.post("/login", CustomerController.loginCustomer);
 
+//-----------------------------------FAVOURITE API---------------------------------------
+router.post("/create-favourite-api", FavouriteApiController.createFavouriteApi);
+router.get("/getFavouriteApi", FavouriteApiController.getFavouriteApi);
 module.exports = router;

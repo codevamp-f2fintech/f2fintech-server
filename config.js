@@ -20,7 +20,7 @@ module.exports = {
   DB: process.env.DB || "f2-fintech",
   DB_PORT: process.env.DB_PORT || 3310,
   DB_USERNAME: process.env.DB_USERNAME || "root",
-  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_PASSWORD: process.env.DB_PASSWORD || "Rishav@123",
   SALT: process.env.SALT || 12,
   SECRET: process.env.SECRET || "F#2@FIN!&TECH%20",
 };
