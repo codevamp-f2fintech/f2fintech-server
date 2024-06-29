@@ -7,12 +7,20 @@
  */
 
 const express = require("express");
+const multer = require("multer");
 
-const { formatResponse, verifyToken } = require("../../utility");
+const { formatResponse } = require("../../utility");
 const CustomerController = require("../../controller/customer");
 const FavouriteApiController = require("../../controller/favourite_api");
 const { checkAuthenticated } = require("../../config/passportConfig");
+const CustomerDocumentController = require("../../controller/customer_document");
+// const {
+  // importLoanProviders,
+// } = require("../../controller/loanProviderController");
+
+const LoanProvidersController = require("../../controller/lender_providers");
 const router = express.Router();
+const upload = multer({ dest: "uploads/" });
 
 //-----------------------------------TEST---------------------------------------
 router.get("/test", (req, res) => {
@@ -21,14 +29,25 @@ router.get("/test", (req, res) => {
 
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create", CustomerController.register);
-
 router.patch("/update", checkAuthenticated, CustomerController.updateCustomer);
-
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
-
 router.post("/login", CustomerController.loginCustomer);
 
 //-----------------------------------FAVOURITE API---------------------------------------
-router.post("/create-favourite-api", FavouriteApiController.createFavouriteApi);
-router.get("/getFavouriteApi", FavouriteApiController.getFavouriteApi);
+router.post("/create-favourite", FavouriteApiController.createFavourite);
+router.get("/get-favourite", FavouriteApiController.getFavourite);
+
+//--------------------------CUSTOMER DOCUMENT API----------------------------
+router.post(
+  "/create-customer-document",
+  CustomerDocumentController.createCustomerDocument
+);
+router.get(
+  "/get-customer-document",
+  CustomerDocumentController.getCustomerDocument
+);
+
+//--------------------------LOAN PROVIDERS API----------------------------
+router.post("/import-loan-providers", upload.single("file"), LoanProvidersController);
+
 module.exports = router;

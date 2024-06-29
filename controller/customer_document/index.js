@@ -6,15 +6,15 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const FavouriteApiModel = require("../../model/favourite_api");
 const Utility = require("../../utility");
+const CustomerDocumentModel = require("../../model/customer_document");
 
-const FavouriteApiController = {
-  createFavourite: (req, res, next) => {
+const CustomerDocumentController = {
+  createCustomerDocument: (req, res, next) => {
     const payload = req.body;
     console.log(payload, "payload");
     return new Promise((resolve, reject) => {
-      FavouriteApiModel.create(payload)
+      CustomerDocumentModel.create(payload)
         .then((result) => {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
@@ -24,10 +24,10 @@ const FavouriteApiController = {
     });
   },
 
-  getFavourite: (req, res, next) => {
-    const { limit = 10, offset = 0 } = req.body; // default values
+  getCustomerDocument: (req, res, next) => {
+    const { limit = 10, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
-      FavouriteApiModel.findAndCountAll({
+      CustomerDocumentModel.findAndCountAll({
         limit: parseInt(limit),
         offset: parseInt(offset),
       })
@@ -50,4 +50,4 @@ const FavouriteApiController = {
   },
 };
 
-module.exports = FavouriteApiController;
+module.exports = CustomerDocumentController;
