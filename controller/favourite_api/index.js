@@ -12,7 +12,7 @@ const Utility = require("../../utility");
 const FavouriteApiController = {
   createFavouriteApi: (req, res, next) => {
     const payload = req.body;
-    console.log(payload, "payload");
+
     return new Promise((resolve, reject) => {
       FavouriteApiModel.create(payload)
         .then((result) => {

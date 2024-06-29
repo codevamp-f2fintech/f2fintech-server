@@ -12,7 +12,6 @@ const CustomerDocumentModel = require("../../model/customer_document");
 const CustomerDocumentController = {
   createCustomerDocument: (req, res, next) => {
     const payload = req.body;
-    console.log(payload, "payload");
     return new Promise((resolve, reject) => {
       CustomerDocumentModel.create(payload)
         .then((result) => {
