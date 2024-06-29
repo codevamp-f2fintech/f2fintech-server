@@ -5,6 +5,7 @@ const CustomerController = require("../../controller/customer");
 const { formatResponse, verifyToken } = require("../../utility");
 const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
+const LoanStatusController = require("../../controller/loan_status");
 const router = express.Router();
 
 //-----------------------------------TEST---------------------------------------
@@ -48,5 +49,9 @@ router.get(
   "/get-loanapplication/:id",
   LoanApplicationController.getLoanApplicationById
 );
+
+//-----------------------------------LOAN STATUS---------------------------------------
+router.get('/get-loan-status', LoanStatusController.getLoanStatus);
+
 
 module.exports = router;
