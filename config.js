@@ -18,7 +18,7 @@ module.exports = {
   HOST: process.env.HOST || "localhost",
   PORT: process.env.PORT || 8080,
   DB: process.env.DB || "f2-fintech",
-  DB_PORT: process.env.DB_PORT || 3310,
+  DB_PORT: process.env.DB_PORT || 3306,
   DB_USERNAME: process.env.DB_USERNAME || "root",
   DB_PASSWORD: process.env.DB_PASSWORD || "Rishav@123",
   SALT: process.env.SALT || 12,
