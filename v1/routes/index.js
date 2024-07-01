@@ -8,9 +8,9 @@ const CustomerController = require("../../controller/customer");
 const FavouriteApiController = require("../../controller/favourite_api");
 const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
+const LoanStatusController = require("../../controller/loan_status");
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
-
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
@@ -57,5 +57,9 @@ router.get(
   "/get-loanapplication/:id",
   LoanApplicationController.getLoanApplicationById
 );
+
+//-----------------------------------LOAN STATUS---------------------------------------
+router.get('/get-loan-status', LoanStatusController.getLoanStatus);
+
 
 module.exports = router;
