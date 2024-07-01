@@ -29,6 +29,11 @@ const sequelize = new Sequelize(
     dialectOptions: {
       useUTC: false, //for reading from the database
     },
+    define: {
+      freezeTableName: true,
+      underscored: true,
+      timestamps: false,
+    },
   }
 );
 module.exports = sequelize;
