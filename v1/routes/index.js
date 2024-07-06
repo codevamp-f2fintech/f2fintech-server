@@ -1,16 +1,18 @@
 const express = require("express");
 const LoanProviderController = require("../../controller/loan_provider");
-const CustomerReviewController = require("../../controller/customer_review"); // Added correct import
+const BankController = require("../../controller/bank");
+const CustomerReviewController = require("../../controller/customer_review");
 const CustomerController = require("../../controller/customer");
-const { formatResponse, verifyToken } = require("../../utility");
 const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const LoanStatusController = require("../../controller/loan_status");
+const NotificationController = require("../../controller/notifications");
+
 const router = express.Router();
 
 //-----------------------------------TEST---------------------------------------
 router.get("/test", (req, res) => {
-  res.status(200).send(formatResponse(200, "API Working Fine."));
+  res.status(200).json({ status: 200, message: "API Working Fine." });
 });
 
 //-----------------------------------LOAN PROVIDER---------------------------------------
@@ -29,10 +31,9 @@ router.patch(
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 router.post("/login", CustomerController.loginCustomer);
 
-
 //-----------------------------------CUSTOMER REVIEW---------------------------------------
-router.get('/get-customer-review', CustomerReviewController.getCustomerReview); // Corrected controller
-router.post('/create-customer-review', CustomerReviewController.createCustomerReview); // Corrected controller
+router.get('/get-customer-review', CustomerReviewController.getCustomerReview);
+router.post('/create-customer-review', CustomerReviewController.createCustomerReview);
 
 //-----------------------------------LOAN APPLICATION---------------------------------------
 router.post(
@@ -52,6 +53,10 @@ router.get(
 
 //-----------------------------------LOAN STATUS---------------------------------------
 router.get('/get-loan-status', LoanStatusController.getLoanStatus);
+
+//-----------------------------------NOTIFICATIONS---------------------------------------
+router.get('/get-notifications', NotificationController.getNotifications);
+router.post('/create-notification', NotificationController.createNotification);
 
 
 module.exports = router;
