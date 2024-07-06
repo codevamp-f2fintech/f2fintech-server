@@ -1,6 +1,5 @@
 const express = require("express");
 const LoanProviderController = require("../../controller/loan_provider");
-const BankController = require("../../controller/bank");
 const CustomerReviewController = require("../../controller/customer_review");
 const CustomerController = require("../../controller/customer");
 const LoanApplicationController = require("../../controller/loan_application");
