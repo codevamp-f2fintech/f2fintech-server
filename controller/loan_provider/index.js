@@ -17,6 +17,7 @@ const LoanProviderController = {
       });
 
       const { count, rows } = list;
+      console.log(list, "response");
       if (count > 0) {
         res.status(200).send(formatResponse(200, { count, rows }));
       } else {
@@ -35,6 +36,21 @@ const LoanProviderController = {
       res.status(200).send(formatResponse(200, loanProvider));
     } catch (err) {
       console.error("Error creating loan provider:", err);
+      res.status(500).send(formatResponse(500, err));
+    }
+  },
+  toggleFavorite: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const loanProvider = await LoanProviderModel.findByPk(id);
+      if (!loanProvider) {
+        return res.status(404).send(formatResponse(404, `No Data Found`));
+      }
+      loanProvider.isfavourite = loanProvider.isfavourite ? 0 : 1;
+      await loanProvider.save();
+      res.status(200).send(formatResponse(200, loanProvider));
+    } catch (err) {
+      console.error("Error toggling favorite:", err);
       res.status(500).send(formatResponse(500, err));
     }
   },
