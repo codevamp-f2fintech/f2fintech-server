@@ -5,7 +5,7 @@ const CustomerController = require("../../controller/customer");
 const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const LoanStatusController = require("../../controller/loan_status");
-const NotificationController = require("../../controller/notifications");
+const NotificationController = require("../../controller/notification");
 
 const router = express.Router();
 

@@ -10,7 +10,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../sequelize");
 
 const NotificationModel = sequelize.define(
-  "notifications",
+  "notification",
   {
     message: {
       type: Sequelize.STRING,
@@ -18,7 +18,7 @@ const NotificationModel = sequelize.define(
     type: {
       type: Sequelize.STRING,
     },
-    userId: {
+    user_id: {
       type: Sequelize.INTEGER,
     },
     status: {
