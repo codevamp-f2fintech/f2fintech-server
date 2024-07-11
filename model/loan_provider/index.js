@@ -13,29 +13,38 @@ const sequelize = require("../../sequelize");
 const LoanProviderModel = sequelize.define(
   "loan_provider",
   {
-    name: {
-      type: Sequelize.STRING,
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     title: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
-    location: {
+    home: {
+      type: Sequelize.TINYINT, // Using TINYINT for boolean representation
+      allowNull: false,
+    },
+    homeimage: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
-    logo: {
-      type: Sequelize.STRING,
-    },
-    max_amount: {
-      type: Sequelize.INTEGER,
-    },
-    min_amount: {
-      type: Sequelize.INTEGER,
-    },
-    max_tenure: {
-      type: Sequelize.INTEGER,
-    },
-    roi: {
+    interest_rate: {
       type: Sequelize.FLOAT,
+      allowNull: false,
+    },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    short_description: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+    },
+    long_description: {
+      type: Sequelize.TEXT,
+      allowNull: true,
     },
   },
   {
