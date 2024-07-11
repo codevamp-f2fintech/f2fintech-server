@@ -6,46 +6,38 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 const LoanProviderModel = require("../../model/loan_provider");
-
 const { formatResponse } = require("../../utility");
 
 const LoanProviderController = {
   getLoanProvider: (req, res) => {
-    return new Promise((resolve, reject) => {
-      LoanProviderModel.findAndCountAll({
-        limit: 5,
-        offset: 0,
-        order: [["roi", "ASC"]],
+    LoanProviderModel.findAndCountAll({
+      limit: 5,
+      offset: 0,
+    })
+      .then((list) => {
+        const { count, rows } = list;
+        if (count > 0) {
+          res.status(200).send(formatResponse(200, { count, rows }));
+        } else {
+          res.status(404).send(formatResponse(404, "No Data Found"));
+        }
       })
-        .then((list) => {
-          const { count, rows } = list;
-          count > 0
-            ? resolve(
-                res.status(200).send(formatResponse(200, { count, rows }))
-              )
-            : resolve(
-                res.status(404).send(formatResponse(404, `No Data Found`))
-              );
-        })
-        .catch((err) => {
-          reject(res.status(500).send(formatResponse(500, err)));
-        });
-    });
+      .catch((err) => {
+        console.error("Error fetching loan providers:", err);
+        res.status(500).send(formatResponse(500, err.message));
+      });
   },
 
   createLoanProvider: (req, res) => {
     const payload = req.body;
-    return new Promise((resolve, reject) => {
-      LoanProviderModel.create({ ...payload })
-        .then((loanProvider) => {
-          resolve(
-            res.status(200).send(Utility.formatResponse(200, loanProvider))
-          );
-        })
-        .catch((err) => {
-          reject(res.status(500).send(Utility.formatResponse(500, err)));
-        });
-    });
+    LoanProviderModel.create({ ...payload })
+      .then((loanProvider) => {
+        res.status(200).send(formatResponse(200, loanProvider));
+      })
+      .catch((err) => {
+        console.error("Error creating loan provider:", err);
+        res.status(500).send(formatResponse(500, err.message));
+      });
   },
 };
 
