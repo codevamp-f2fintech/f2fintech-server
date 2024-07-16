@@ -32,25 +32,44 @@ const CustomerController = {
   register: (req, res) => {
     const payload = req.body;
     return new Promise((resolve, reject) => {
-      Utility.createHash(payload.password)
-        .then((hash) => {
-          payload.password = hash;
-          CustomerModel.create({ ...payload })
-            .then((customer) => {
-              const token = Utility.getSignedToken(customer.id);
-              resolve(
-                res
-                  .status(200)
-                  .send(Utility.formatResponse(200, { token, id: customer.id }))
-              );
-            })
-            .catch((err) => {
-              reject(res.status(500).send(Utility.formatResponse(500, err)));
-            });
-        })
-        .catch((err) => {
-          reject(res.status(500).send(Utility.formatResponse(500, err)));
-        });
+      console.log("data", payload);
+      if (payload.password) {
+        Utility.createHash(payload.password)
+          .then((hash) => {
+            payload.password = hash;
+            CustomerModel.create({ ...payload })
+              .then((customer) => {
+                const token = Utility.getSignedToken(customer.id);
+                resolve(
+                  res
+                    .status(200)
+                    .send(
+                      Utility.formatResponse(200, { token, id: customer.id })
+                    )
+                );
+              })
+              .catch((err) => {
+                reject(res.status(500).send(Utility.formatResponse(500, err)));
+              });
+          })
+          .catch((err) => {
+            reject(res.status(500).send(Utility.formatResponse(500, err)));
+          });
+      } else {
+        CustomerModel.create({ ...payload })
+          .then((customer) => {
+            // make a func -sendemail under utility file keep
+            const token = Utility.getSignedToken(customer.id);
+            resolve(
+              res
+                .status(200)
+                .send(Utility.formatResponse(200, { token, id: customer.id }))
+            );
+          })
+          .catch((err) => {
+            reject(res.status(500).send(Utility.formatResponse(500, err)));
+          });
+      }
     });
   },
 
