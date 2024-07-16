@@ -10,6 +10,7 @@ const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
+const LoanTrackingController = require("../../controller/loan_tracking");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -57,5 +58,11 @@ router.get(
   "/get-loanapplication/:id",
   LoanApplicationController.getLoanApplicationById
 );
+
+//-----------------------------------LOAN TRACKING---------------------------------------
+router.get("/loan-tracking", LoanTrackingController.getLoanTracking);
+router.post("/loan-tracking", LoanTrackingController.createLoanTracking);
+router.put("/loan-tracking", LoanTrackingController.updateLoanTracking);
+
 
 module.exports = router;
