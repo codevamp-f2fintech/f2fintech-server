@@ -23,6 +23,10 @@ router.get("/test", (req, res) => {
 //-----------------------------------LOAN PROVIDER---------------------------------------
 router.get("/get-loan-provider", LoanProviderController.getLoanProvider);
 router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
+// router.post(
+//   "/loan-providers/toggle-favorite/:id",
+//   LoanProviderController.toggleFavorite
+// );
 
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create-customer", CustomerController.register);

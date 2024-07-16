@@ -7,7 +7,6 @@
  */
 
 const Sequelize = require("sequelize");
-
 const sequelize = require("../../sequelize");
 
 const LoanProviderModel = sequelize.define(
@@ -43,18 +42,6 @@ const LoanProviderModel = sequelize.define(
       allowNull: true,
     },
     long_description: {
-      type: Sequelize.TEXT,
-      allowNull: true,
-    },
-    charges: {
-      type: Sequelize.STRING, // Using STRING for varchar representation
-      allowNull: true,
-    },
-    minimum_kyc: { // Corrected typo
-      type: Sequelize.TEXT,
-      allowNull: true,
-    },
-    document_required: {
       type: Sequelize.TEXT,
       allowNull: true,
     },
