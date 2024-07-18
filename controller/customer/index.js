@@ -21,8 +21,15 @@ const login = (req, res, next) => {
       }
       req.logIn(customer, (err) => {
         if (err) return reject(err);
-        const token = Utility.getSignedToken(customer.id);
-        resolve(res.status(200).send(Utility.formatResponse(200, { token })));
+        resolve(
+          res.status(200).send(
+            Utility.formatResponse(200, {
+              token: Utility.getSignedToken(customer.id),
+              name: customer.name,
+              id: customer.id,
+            })
+          )
+        );
       });
     })(req, res, next);
   });
@@ -32,23 +39,44 @@ const CustomerController = {
   register: (req, res) => {
     const payload = req.body;
     return new Promise((resolve, reject) => {
-      Utility.createHash(payload.password)
-        .then((hash) => {
-          payload.password = hash;
-          CustomerModel.create({ ...payload })
-            .then((customer) => {
-              const token = Utility.getSignedToken(customer.id);
-              resolve(
-                res
-                  .status(200)
-                  .send(Utility.formatResponse(200, { token, id: customer.id }))
-              );
-            })
-            .catch((err) => {
-              reject(res.status(500).send(Utility.formatResponse(500, err)));
-            });
+      CustomerModel.findOne({ where: { contact: payload.contact } })
+        .then((existingCustomer) => {
+          if (existingCustomer) {
+            return res.status(409).send(
+              Utility.formatResponse(409, {
+                message: "Phone number already registered",
+              })
+            );
+          } else {
+            Utility.createHash(payload.password)
+              .then((hash) => {
+                payload.password = hash;
+                CustomerModel.create({ ...payload })
+                  .then((customer) => {
+                    const token = Utility.getSignedToken(customer.id);
+                    resolve(
+                      res.status(200).send(
+                        Utility.formatResponse(200, {
+                          token,
+                          id: customer.id,
+                        })
+                      )
+                    );
+                  })
+                  .catch((err) => {
+                    reject(
+                      res.status(500).send(Utility.formatResponse(500, err))
+                    );
+                  });
+              })
+              .catch((err) => {
+                console.log("Error creating hash:", err);
+                reject(res.status(500).send(Utility.formatResponse(500, err)));
+              });
+          }
         })
         .catch((err) => {
+          console.log("Error finding existing customer:", err);
           reject(res.status(500).send(Utility.formatResponse(500, err)));
         });
     });
@@ -124,6 +152,77 @@ const CustomerController = {
           );
         });
     });
+  },
+
+  getCustomerProfile: (req, res) => {
+    const { id } = req.params; // default values
+    console.log(id, "customer id");
+    return new Promise((resolve, reject) => {
+      CustomerModel.findByPk(id)
+        .then((customer) => {
+          console.log("customer", customer);
+          if (customer) {
+            resolve(
+              res.status(200).send(Utility.formatResponse(200, { customer }))
+            );
+          } else {
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+            );
+          }
+        })
+        .catch((err) => {
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
+        });
+    });
+  },
+
+  resetPassword: (req, res) => {
+    const { customerId, newPassword } = req.body;
+    console.log("payload", req.body);
+
+    CustomerModel.findOne({ where: { id: customerId } })
+      .then((existingCustomer) => {
+        if (!existingCustomer) {
+          return res
+            .status(404)
+            .send(Utility.formatResponse(404, "Customer not found"));
+        }
+
+        return Utility.createHash(newPassword);
+      })
+      .then((hash) => {
+        return CustomerModel.update(
+          { password: hash },
+          { where: { id: customerId } }
+        );
+      })
+      .then(() => {
+        console.log("Password updated successfully");
+        res.status(200).send(Utility.formatResponse(200, "Success"));
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+        res.status(500).send(Utility.formatResponse(500, err.message));
+      });
+  },
+
+  updateCustomerProfile: (req, res) => {
+    const { customerId, name, email, gender, contact } = req.body;
+    CustomerModel.update(
+      { name: name, email: email, gender: gender, contact: contact },
+      { where: { id: customerId } }
+    )
+      .then(() => {
+        res.status(200).send(Utility.formatResponse(200, "Success"));
+      })
+      .catch((err) => {
+        res
+          .status(505)
+          .send(Utility.formatResponse(505, "Contact already Exist"));
+      });
   },
 
   loginCustomer: (req, res, next) => {
