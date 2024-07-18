@@ -36,12 +36,25 @@ router.patch(
 );
 
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
+
 router.post("/login", CustomerController.loginCustomer);
+
+router.get("/get-customer-profile/:id", CustomerController.getCustomerProfile);
+
+router.post("/reset-password", CustomerController.resetPassword);
+
+router.post(
+  "/update-customer-profile",
+  CustomerController.updateCustomerProfile
+);
 
 //-----------------------------------CUSTOMER REVIEW---------------------------------------
 
-router.get('/get-customer-review', CustomerReviewController.getCustomerReview);
-router.post('/create-customer-review', CustomerReviewController.createCustomerReview);
+router.get("/get-customer-review", CustomerReviewController.getCustomerReview);
+router.post(
+  "/create-customer-review",
+  CustomerReviewController.createCustomerReview
+);
 
 //-----------------------------------LOAN APPLICATION---------------------------------------
 router.post(
@@ -60,10 +73,10 @@ router.get(
 );
 
 //-----------------------------------LOAN STATUS---------------------------------------
-router.get('/get-loan-status', LoanStatusController.getLoanStatus);
+router.get("/get-loan-status", LoanStatusController.getLoanStatus);
 
 //-----------------------------------NOTIFICATIONS---------------------------------------
-router.get('/get-notifications', NotificationController.getNotifications);
-router.post('/create-notification', NotificationController.createNotification);
+router.get("/get-notifications", NotificationController.getNotifications);
+router.post("/create-notification", NotificationController.createNotification);
 
 module.exports = router;
