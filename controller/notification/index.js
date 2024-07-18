@@ -6,7 +6,7 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 const NotificationModel = require("../../model/notification");
-const Utility = require("../utility");
+const Utility = require("../../utility");
 
 const NotificationController = {
   getNotifications: (req, res) => {

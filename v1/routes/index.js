@@ -2,20 +2,15 @@ const multer = require("multer");
 const express = require("express");
 const LoanProviderController = require("../../controller/loan_provider");
 const CustomerReviewController = require("../../controller/customer_review");
-
 const CustomerController = require("../../controller/customer");
 const LoanApplicationController = require("../../controller/loan_application");
 const { checkAuthenticated } = require("../../config/passportConfig");
 const LoanStatusController = require("../../controller/loan_status");
 const NotificationController = require("../../controller/notification");
 
-
 const { formatResponse, verifyToken } = require("../../utility");
-const CustomerController = require("../../controller/customer");
 const FavouriteApiController = require("../../controller/favourite_api");
-const LoanApplicationController = require("../../controller/loan_application");
-const { checkAuthenticated } = require("../../config/passportConfig");
-const LoanStatusController = require("../../controller/loan_status");
+
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
 
@@ -48,13 +43,6 @@ router.post("/login", CustomerController.loginCustomer);
 router.get('/get-customer-review', CustomerReviewController.getCustomerReview);
 router.post('/create-customer-review', CustomerReviewController.createCustomerReview);
 
-router.get("/get-customer-review", CustomerReviewController.getCustomerReview); // Corrected controller
-router.post(
-  "/create-customer-review",
-  CustomerReviewController.createCustomerReview
-); // Corrected controller
-
-
 //-----------------------------------LOAN APPLICATION---------------------------------------
 router.post(
   "/create-loanapplication",
@@ -77,6 +65,5 @@ router.get('/get-loan-status', LoanStatusController.getLoanStatus);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get('/get-notifications', NotificationController.getNotifications);
 router.post('/create-notification', NotificationController.createNotification);
-
 
 module.exports = router;
