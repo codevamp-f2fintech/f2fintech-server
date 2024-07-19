@@ -14,7 +14,7 @@ const session = require("express-session");
 const config = require("./config");
 const rateLimiter = require("./utility/rateLimiter");
 const v1Routes = require("./v1/routes");
-const { passport, checkAuthenticated } = require("./config/passportConfig");
+const { passport } = require("./config/passportConfig");
 
 let { connectToMysql } = require("./db");
 

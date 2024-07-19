@@ -7,7 +7,6 @@
  */
 
 const Sequelize = require("sequelize");
-
 const sequelize = require("../../sequelize");
 
 const LoanProviderModel = sequelize.define(
@@ -45,6 +44,11 @@ const LoanProviderModel = sequelize.define(
     long_description: {
       type: Sequelize.TEXT,
       allowNull: true,
+    },
+    isfavourite: {
+      type: Sequelize.TINYINT,
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {
