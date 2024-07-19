@@ -10,7 +10,7 @@ const Utility = require("../../utility");
 const CustomerInfoModel = require("../../model/customer_info");
 
 const CustomerInfoController = {
-  createCustomerInfo: (req, res, next) => {
+  createCustomerInfo: (req, res) => {
     const payload = req.body;
     return new Promise((resolve, reject) => {
       CustomerInfoModel.create(payload)
