@@ -14,17 +14,14 @@ const session = require("express-session");
 const config = require("./config");
 const rateLimiter = require("./utility/rateLimiter");
 const v1Routes = require("./v1/routes");
-const { passport, checkAuthenticated } = require("./config/passportConfig");
+const { passport } = require("./config/passportConfig");
 
-// const CustomerController = require("./controller/customer");
 let { connectToMysql } = require("./db");
 
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
-  method: "POST",
-  //this will allow multiple domains to connect
+  origin: ["http://localhost:5173"], //this will allow multiple domains to connect
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -37,14 +34,6 @@ app.use(
     parameterLimit: 50000,
   })
 );
-
-// app.post("/create-customer", CustomerController.register);
-
-// app.post("/api/v1/create-customer-info", (req, res) => {
-//   const formData = req.body;
-//   console.log("Data received from UI:", formData);
-//   res.json({ message: "Data received" });
-// });
 
 app.use(cors(corsOptions));
 app.use(rateLimiter);
