@@ -18,6 +18,7 @@ const CustomerInfoController = {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
         .catch((err) => {
+          console.log("error", err);
           reject(res.status(500).send(Utility.formatResponse(500, err)));
         });
     });

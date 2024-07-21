@@ -19,19 +19,15 @@ const CustomerInfoModel = sequelize.define(
     },
     name: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     number: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     email: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     customer_id: {
       type: Sequelize.INTEGER,
-      allowNull: false,
       references: {
         model: "customers",
         key: "id",
@@ -39,55 +35,42 @@ const CustomerInfoModel = sequelize.define(
     },
     pan: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     aadhaar: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     bank: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     bank_ac_type: {
       type: Sequelize.ENUM("current", "savings"),
-      allowNull: false,
     },
     occupation_type: {
       type: Sequelize.ENUM("business", "salary"),
-      allowNull: false,
     },
     occupation: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     gst_registered: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
     },
     gst_number: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     street: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     landmark: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     zipcode: {
       type: Sequelize.STRING(100),
-      allowNull: false,
     },
     city: {
       type: Sequelize.STRING(50),
-      allowNull: false,
     },
     state: {
       type: Sequelize.STRING(50),
-      allowNull: false,
     },
   },
   {
