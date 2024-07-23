@@ -18,76 +18,61 @@ const CustomerInfoModel = sequelize.define(
       primaryKey: true,
     },
     name: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     number: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     email: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     customer_id: {
       type: Sequelize.INTEGER,
-      allowNull: false,
       references: {
         model: "customers",
         key: "id",
       },
     },
     pan: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     aadhaar: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     bank: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     bank_ac_type: {
-      type: Sequelize.ENUM("current", "savings"),
-      allowNull: false,
+      type: Sequelize.ENUM,
+      values: ["current", "savings"],
     },
     occupation_type: {
-      type: Sequelize.ENUM("business", "salary"),
-      allowNull: false,
+      type: Sequelize.ENUM,
+      values: ["business", "salary"],
     },
     occupation: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     gst_registered: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
     },
     gst_number: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     street: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     landmark: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     zipcode: {
-      type: Sequelize.STRING(100),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     city: {
-      type: Sequelize.STRING(50),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     state: {
-      type: Sequelize.STRING(50),
-      allowNull: false,
+      type: Sequelize.STRING,
     },
   },
   {

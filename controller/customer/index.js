@@ -86,7 +86,7 @@ const CustomerController = {
                 <p style="font-size: 16px; color: #555;">We're glad to have you on board at F2 Fintech.</p>
                 <p style="font-size: 16px; color: #555;">We have created your user account with the entered contact number.</p>
                 <p style="font-size: 16px; text-align: center; margin: 20px 0;">
-            <a href="http://your-reset-password-link.com" 
+                <a href="http://localhost:5173/reset-password" 
                style="color: #ffffff; background-color: #2c3ce3; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block;">
               Kindly Reset Your Password By Clicking Here
             </a>
