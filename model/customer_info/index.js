@@ -18,13 +18,13 @@ const CustomerInfoModel = sequelize.define(
       primaryKey: true,
     },
     name: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     number: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     email: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     customer_id: {
       type: Sequelize.INTEGER,
@@ -34,43 +34,45 @@ const CustomerInfoModel = sequelize.define(
       },
     },
     pan: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     aadhaar: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     bank: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     bank_ac_type: {
-      type: Sequelize.ENUM("current", "savings"),
+      type: Sequelize.ENUM,
+      values: ["current", "savings"],
     },
     occupation_type: {
-      type: Sequelize.ENUM("business", "salary"),
+      type: Sequelize.ENUM,
+      values: ["business", "salary"],
     },
     occupation: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     gst_registered: {
       type: Sequelize.BOOLEAN,
     },
     gst_number: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     street: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     landmark: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     zipcode: {
-      type: Sequelize.STRING(100),
+      type: Sequelize.STRING,
     },
     city: {
-      type: Sequelize.STRING(50),
+      type: Sequelize.STRING,
     },
     state: {
-      type: Sequelize.STRING(50),
+      type: Sequelize.STRING,
     },
   },
   {
