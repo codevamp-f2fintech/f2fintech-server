@@ -22,6 +22,7 @@ const FavouriteApiController = require("../../controller/favourite_api");
 
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
+const LoanTrackingController = require("../../controller/loan_tracker");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -96,5 +97,9 @@ router.get("/get-loan-status", LoanStatusController.getLoanStatus);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+//-----------------------------------LOAN TRACKING---------------------------------------
+router.get("/get-loan-tracking", LoanTrackingController.getLoanTracking);
+router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 
 module.exports = router;
