@@ -10,7 +10,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../sequelize");
 
 const LoanProviderModel = sequelize.define(
-  "loan_provider", //this need to be fixed
+  "loan_providers", //this need to be fixed
   {
     id: {
       type: Sequelize.INTEGER,
