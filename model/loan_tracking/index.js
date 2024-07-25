@@ -14,15 +14,14 @@ const LoanTrackingModel = sequelize.define(
   {
     loan_id: {
       type: Sequelize.INTEGER,
-      primaryKey: false,
     },
     status: {
       type: Sequelize.ENUM('submitted', 'under_review', 'approved', 'hold', 'disbursed', 'rejected'),
-      allowNull: false,
+  
     },
     updated_at: {
       type: Sequelize.DATE,
-      allowNull: false,
+      
     },
   },
   {
