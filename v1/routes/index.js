@@ -22,7 +22,7 @@ const FavouriteApiController = require("../../controller/favourite_api");
 
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
-const LoanTrackingController = require("../../controller/loan_tracker");
+const LoanTrackingController = require("../../controller/loan_tracking");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
