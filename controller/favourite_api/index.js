@@ -10,7 +10,7 @@ const FavouriteApiModel = require("../../model/favourite_api");
 const Utility = require("../../utility");
 
 const FavouriteApiController = {
-  createFavouriteApi: (req, res, next) => {
+  createFavourite: (req, res, next) => {
     const payload = req.body;
 
     return new Promise((resolve, reject) => {
@@ -24,7 +24,7 @@ const FavouriteApiController = {
     });
   },
 
-  getFavouriteApi: (req, res, next) => {
+  getFavourite: (req, res, next) => {
     const { limit = 10, offset = 0 } = req.body; // default values
     return new Promise((resolve, reject) => {
       FavouriteApiModel.findAndCountAll({

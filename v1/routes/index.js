@@ -8,21 +8,20 @@
 
 const multer = require("multer");
 const express = require("express");
-const LoanProviderController = require("../../controller/loan_provider");
-const CustomerReviewController = require("../../controller/customer_review");
-const CustomerInfoController = require("../../controller/customer_info");
+
 const CustomerController = require("../../controller/customer");
+const CustomerDocumentController = require("../../controller/customer_document");
+const CustomerInfoController = require("../../controller/customer_info");
+const CustomerReviewController = require("../../controller/customer_review");
+const FavouriteApiController = require("../../controller/favourite_api");
 const LoanApplicationController = require("../../controller/loan_application");
-const { checkAuthenticated } = require("../../config/passportConfig");
+const LoanProviderController = require("../../controller/loan_provider");
 const LoanStatusController = require("../../controller/loan_status");
+const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
 
-const { formatResponse, verifyToken } = require("../../utility");
-const FavouriteApiController = require("../../controller/favourite_api");
-
-const CustomerDocumentController = require("../../controller/customer_document");
-const { importLoanProviders } = require("../../controller/loan_provider");
-const LoanTrackingController = require("../../controller/loan_tracking");
+const { checkAuthenticated } = require("../../config/passportConfig");
+const { formatResponse } = require("../../utility");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -42,15 +41,12 @@ router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
 
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create-customer", CustomerController.register);
-
 router.patch(
   "/update-customer",
   checkAuthenticated,
   CustomerController.updateCustomer
 );
-
 router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
-
 router.post("/login", CustomerController.loginCustomer);
 
 //-----------------------------------CUSTOMER INFO---------------------------------------
@@ -101,5 +97,26 @@ router.post("/create-notification", NotificationController.createNotification);
 //-----------------------------------LOAN TRACKING---------------------------------------
 router.get("/get-loan-tracking", LoanTrackingController.getLoanTracking);
 router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
+
+//-----------------------------------FAVOURITE API---------------------------------------
+router.post("/create-favourite", FavouriteApiController.createFavourite);
+router.get("/get-favourite", FavouriteApiController.getFavourite);
+
+//--------------------------CUSTOMER DOCUMENT API----------------------------
+router.post(
+  "/create-customer-document",
+  CustomerDocumentController.createCustomerDocument
+);
+router.get(
+  "/get-customer-document",
+  CustomerDocumentController.getCustomerDocument
+);
+
+//--------------------------LOAN PROVIDERS API----------------------------
+// router.post(
+//   "/import-loan-providers",
+//   upload.single("file"),
+//   importLoanProviders
+// );
 
 module.exports = router;

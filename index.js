@@ -49,6 +49,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/v1", v1Routes);
+// Add the new route for importing loan providers
+// app.post(
+//   "/import-loan-providers",
+//   upload.single("file"),
+//   loanProviderController.importLoanProviders
+// );
 
 app.listen(config.PORT, () => {
   console.log(`Server running on port ${config.PORT}`);
