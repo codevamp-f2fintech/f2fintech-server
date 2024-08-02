@@ -10,18 +10,23 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../sequelize");
 
 const LoanTrackingModel = sequelize.define(
-  "loan_tracking", 
+  "loan_tracking",
   {
-    loan_id: {
+    customer_application_id: {
       type: Sequelize.INTEGER,
     },
     status: {
-      type: Sequelize.ENUM('submitted', 'under_review', 'approved', 'hold', 'disbursed', 'rejected'),
-  
+      type: Sequelize.ENUM(
+        "submitted",
+        "under_review",
+        "approved",
+        "hold",
+        "disbursed",
+        "rejected"
+      ),
     },
     updated_at: {
       type: Sequelize.DATE,
-      
     },
   },
   {
