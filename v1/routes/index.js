@@ -8,17 +8,17 @@
 
 const multer = require("multer");
 const express = require("express");
-const LoanProviderController = require("../../controller/loan_provider");
-const CustomerReviewController = require("../../controller/customer_review");
-const CustomerInfoController = require("../../controller/customer_info");
+
 const CustomerController = require("../../controller/customer");
-const LoanApplicationController = require("../../controller/loan_application");
-const LoanStatusController = require("../../controller/loan_status");
-const NotificationController = require("../../controller/notification");
-const FavouriteApiController = require("../../controller/favourite_api");
-const LoanProviderController = require("../../controller/loan_provider");
-const LoanTrackingController = require("../../controller/loan_tracking");
 const CustomerDocumentController = require("../../controller/customer_document");
+const CustomerInfoController = require("../../controller/customer_info");
+const CustomerReviewController = require("../../controller/customer_review");
+const FavouriteApiController = require("../../controller/favourite_api");
+const LoanApplicationController = require("../../controller/loan_application");
+const LoanProviderController = require("../../controller/loan_provider");
+const LoanStatusController = require("../../controller/loan_status");
+const LoanTrackingController = require("../../controller/loan_tracking");
+const NotificationController = require("../../controller/notification");
 
 const { checkAuthenticated } = require("../../config/passportConfig");
 const { formatResponse } = require("../../utility");
@@ -113,10 +113,10 @@ router.get(
 );
 
 //--------------------------LOAN PROVIDERS API----------------------------
-router.post(
-  "/import-loan-providers",
-  upload.single("file"),
-  importLoanProviders
-);
+// router.post(
+//   "/import-loan-providers",
+//   upload.single("file"),
+//   importLoanProviders
+// );
 
 module.exports = router;
