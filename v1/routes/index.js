@@ -46,6 +46,9 @@ router.get(
   "/get-customer-document",
   CustomerDocumentController.getCustomerDocument
 );
+//-----------------------------------RATING AND REVIEW---------------------------------------
+router.get("/get-rating", CustomerReviewController.getCustomerReview);
+router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
