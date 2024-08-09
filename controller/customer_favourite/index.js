@@ -7,13 +7,14 @@
  */
 
 const Utility = require("../../utility");
-const CustomerLoanApplication = require("../../model/loan_application");
+const CustomerFavouriteModel = require("../../model/customer_favourite");
 
-const LoanApplicationController = {
-  createLoanApplication: (req, res, next) => {
+const CustomerFavouriteController = {
+  createFavourite: (req, res) => {
     const payload = req.body;
+
     return new Promise((resolve, reject) => {
-      CustomerLoanApplication.create(payload)
+      CustomerFavouriteModel.create(payload)
         .then((result) => {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
@@ -23,10 +24,10 @@ const LoanApplicationController = {
     });
   },
 
-  getLoanApplication: (req, res, next) => {
-    const { limit = 10, offset = 0 } = req.body; // default values
+  getFavourite: (req, res) => {
+    const { limit = 10, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
-      CustomerLoanApplication.findAndCountAll({
+      CustomerFavouriteModel.findAndCountAll({
         limit: parseInt(limit),
         offset: parseInt(offset),
       })
@@ -36,28 +37,7 @@ const LoanApplicationController = {
             resolve(res.status(200).send(Utility.formatResponse(200, rows)));
           } else {
             resolve(
-              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
-            );
-          }
-        })
-        .catch((err) => {
-          reject(
-            res.status(500).send(Utility.formatResponse(500, err.message))
-          );
-        });
-    });
-  },
-
-  getLoanApplicationById: (req, res) => {
-    const { id } = req.params;
-    return new Promise((resolve, reject) => {
-      CustomerLoanApplication.findOne({ where: { id } })
-        .then((result) => {
-          if (result) {
-            resolve(res.status(200).send(Utility.formatResponse(200, result)));
-          } else {
-            resolve(
-              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
             );
           }
         })
@@ -70,4 +50,4 @@ const LoanApplicationController = {
   },
 };
 
-module.exports = LoanApplicationController;
+module.exports = CustomerFavouriteController;

@@ -7,53 +7,55 @@
  */
 
 const Sequelize = require("sequelize");
+
 const sequelize = require("../../sequelize");
 
 const LoanProviderModel = sequelize.define(
-  "loan_providers", //this need to be fixed
+  "loan_provider",
   {
-    id: {
+    max_tenure: {
       type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+    },
+    max_amount: {
+      type: Sequelize.INTEGER,
+    },
+    min_amount: {
+      type: Sequelize.INTEGER,
+    },
+    is_home: {
+      type: Sequelize.BOOLEAN,
+    },
+    home_image: {
+      type: Sequelize.STRING,
     },
     title: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    home: {
-      type: Sequelize.TINYINT, // Using TINYINT for boolean representation
-      allowNull: false,
-    },
-    homeimage: {
-      type: Sequelize.STRING,
-      allowNull: false,
+      type: Sequelize.STRING
     },
     interest_rate: {
-      type: Sequelize.FLOAT,
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     description: {
-      type: Sequelize.TEXT,
-      allowNull: false,
+      type: Sequelize.STRING,
     },
     short_description: {
-      type: Sequelize.TEXT,
-      allowNull: true,
+      type: Sequelize.STRING,
     },
     long_description: {
-      type: Sequelize.TEXT,
-      allowNull: true,
+      type: Sequelize.STRING,
     },
-    isfavourite: {
-      type: Sequelize.TINYINT,
-      allowNull: false,
-      defaultValue: 0,
+    charges: {
+      type: Sequelize.STRING,
     },
+    minimum_kyc: {
+      type: Sequelize.STRING,
+    },
+    document_required: {
+      type: Sequelize.STRING,
+    }
   },
   {
-    timestamps: false,
     freezeTableName: true,
+    timestamps: false,
   }
 );
 

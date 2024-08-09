@@ -7,54 +7,43 @@
  */
 
 const Sequelize = require("sequelize");
+
 const sequelize = require("../../sequelize");
 
 const CustomerInfoModel = sequelize.define(
   "customer_info",
   {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: Sequelize.STRING,
-    },
-    number: {
-      type: Sequelize.STRING,
-    },
-    email: {
-      type: Sequelize.STRING,
-    },
     customer_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: "customers",
-        key: "id",
-      },
+      type: Sequelize.INTEGER
     },
     pan: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     aadhaar: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     bank: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     bank_ac_type: {
       type: Sequelize.ENUM,
-      values: ["current", "savings"],
+      values: ['current', 'savings', 'fixed deposit', 'recurring deposit'],
     },
     occupation_type: {
       type: Sequelize.ENUM,
-      values: ["business", "salary"],
+      values: ["business", "salaried"],
     },
     occupation: {
       type: Sequelize.STRING,
     },
     gst_registered: {
       type: Sequelize.BOOLEAN,
+    },
+    company_registered: {
+      type: Sequelize.BOOLEAN,
+    },
+    company: {
+      type: Sequelize.STRING,
     },
     gst_number: {
       type: Sequelize.STRING,
@@ -74,6 +63,9 @@ const CustomerInfoModel = sequelize.define(
     state: {
       type: Sequelize.STRING,
     },
+    referral_id: {
+      type: Sequelize.INTEGER,
+    }
   },
   {
     freezeTableName: true,

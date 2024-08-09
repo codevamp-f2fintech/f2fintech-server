@@ -40,8 +40,8 @@ const login = (req, res, next) => {
 const CustomerController = {
   register: (req, res) => {
     const payload = req.body;
+
     return new Promise((resolve, reject) => {
-      console.log("data", payload);
       if (payload.password) {
         Utility.createHash(payload.password)
           .then((hash) => {
@@ -189,11 +189,10 @@ const CustomerController = {
 
   getCustomerProfile: (req, res) => {
     const { id } = req.params; // default values
-    console.log(id, "customer id");
+
     return new Promise((resolve, reject) => {
       CustomerModel.findByPk(id)
         .then((customer) => {
-          console.log("customer", customer);
           if (customer) {
             resolve(
               res.status(200).send(Utility.formatResponse(200, { customer }))
@@ -214,7 +213,6 @@ const CustomerController = {
 
   resetPassword: (req, res) => {
     const { customerId, newPassword } = req.body;
-    console.log("payload", req.body);
 
     CustomerModel.findOne({ where: { id: customerId } })
       .then((existingCustomer) => {
@@ -233,12 +231,10 @@ const CustomerController = {
         );
       })
       .then(() => {
-        console.log("Password updated successfully");
         res.status(200).send(Utility.formatResponse(200, "Success"));
       })
       .catch((err) => {
-        console.log("Error:", err);
-        res.status(500).send(Utility.formatResponse(500, err.message));
+        res.status(500).send(Utility.formatResponse(500, err));
       });
   },
 

@@ -6,8 +6,8 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const Utility = require("../../utility");
 const CustomerInfoModel = require("../../model/customer_info");
+const Utility = require("../../utility");
 
 const CustomerInfoController = {
   createCustomerInfo: (req, res) => {
@@ -23,7 +23,7 @@ const CustomerInfoController = {
     });
   },
 
-  getCustomerInfo: (req, res, next) => {
+  getCustomerInfo: (req, res) => {
     const { limit = 10, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
       CustomerInfoModel.findAndCountAll({
@@ -48,7 +48,7 @@ const CustomerInfoController = {
     });
   },
 
-  getCustomerInfoById: (req, res, next) => {
+  getCustomerInfoById: (req, res) => {
     const id = req.params.id;
     return new Promise((resolve, reject) => {
       CustomerInfoModel.findByPk(id)

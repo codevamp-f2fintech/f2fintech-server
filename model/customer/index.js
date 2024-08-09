@@ -14,32 +14,32 @@ const CustomerModel = sequelize.define(
   "customer",
   {
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     password: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     email: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     contact: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     gender: {
       type: Sequelize.ENUM,
-      values: ["male", "female", "other"],
+      values: ["male", "female", "other"]
     },
     status: {
       type: Sequelize.ENUM,
-      values: ["active", "inactive"],
+      values: ["active", "inactive"]
     },
     created_at: {
-      type: "Timestamp",
+      type: "Timestamp"
     },
   },
   {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: false
   }
 );
 

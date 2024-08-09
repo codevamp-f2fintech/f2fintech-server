@@ -6,8 +6,8 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const Utility = require("../../utility");
 const CustomerDocumentModel = require("../../model/customer_document");
+const Utility = require("../../utility");
 
 const CustomerDocumentController = {
   createCustomerDocument: (req, res, next) => {

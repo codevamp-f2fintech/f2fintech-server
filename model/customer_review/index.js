@@ -7,6 +7,7 @@
  */
 
 const Sequelize = require("sequelize");
+
 const sequelize = require("../../sequelize");
 
 const CustomerReviewModel = sequelize.define(
@@ -16,18 +17,18 @@ const CustomerReviewModel = sequelize.define(
       type: Sequelize.INTEGER,
     },
     rating: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DECIMAL,
     },
     review: {
-      type: Sequelize.STRING, // Corrected VARCHAR to STRING
+      type: Sequelize.STRING,
     },
     created_at: {
-      type: Sequelize.DATE, // Corrected type
+      type: 'Timestamp'
     },
   },
   {
-    timestamps: false,
     freezeTableName: true,
+    timestamps: false,
   }
 );
 

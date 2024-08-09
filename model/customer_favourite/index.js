@@ -10,29 +10,20 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../../sequelize");
 
-const LoanStatusModel = sequelize.define(
-  "loan_status",
+const CustomerFavouriteModel = sequelize.define(
+  "customer_favourite",
   {
-    provider_name: {
-      type: Sequelize.STRING,
-    },
-    loan_amount: {
-      type: Sequelize.FLOAT,
-    },
-    roi: {
-      type: Sequelize.FLOAT,
-    },
-    tenure: {
+    loan_provider_id: {
       type: Sequelize.INTEGER,
     },
-    eligibility: {
-      type: Sequelize.STRING,
+    customer_id: {
+      type: Sequelize.INTEGER,
     },
   },
   {
-    timestamps: false,
     freezeTableName: true,
+    timestamps: false,
   }
 );
 
-module.exports = LoanStatusModel;
+module.exports = CustomerFavouriteModel;

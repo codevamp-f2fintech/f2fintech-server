@@ -6,15 +6,14 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const FavouriteApiModel = require("../../model/favourite_api");
+const CustomerLoanApplication = require("../../model/customer_application");
 const Utility = require("../../utility");
 
-const FavouriteApiController = {
-  createFavourite: (req, res, next) => {
+const CustomerLoanApplicationController = {
+  createLoanApplication: (req, res) => {
     const payload = req.body;
-
     return new Promise((resolve, reject) => {
-      FavouriteApiModel.create(payload)
+      CustomerLoanApplication.create(payload)
         .then((result) => {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
@@ -24,10 +23,10 @@ const FavouriteApiController = {
     });
   },
 
-  getFavourite: (req, res, next) => {
+  getLoanApplication: (req, res) => {
     const { limit = 10, offset = 0 } = req.body; // default values
     return new Promise((resolve, reject) => {
-      FavouriteApiModel.findAndCountAll({
+      CustomerLoanApplication.findAndCountAll({
         limit: parseInt(limit),
         offset: parseInt(offset),
       })
@@ -37,7 +36,28 @@ const FavouriteApiController = {
             resolve(res.status(200).send(Utility.formatResponse(200, rows)));
           } else {
             resolve(
-              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+            );
+          }
+        })
+        .catch((err) => {
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
+        });
+    });
+  },
+
+  getLoanApplicationById: (req, res) => {
+    const { id } = req.params;
+    return new Promise((resolve, reject) => {
+      CustomerLoanApplication.findOne({ where: { id } })
+        .then((result) => {
+          if (result) {
+            resolve(res.status(200).send(Utility.formatResponse(200, result)));
+          } else {
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
             );
           }
         })
@@ -50,4 +70,4 @@ const FavouriteApiController = {
   },
 };
 
-module.exports = FavouriteApiController;
+module.exports = CustomerLoanApplicationController;

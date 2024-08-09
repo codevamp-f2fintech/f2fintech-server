@@ -23,7 +23,6 @@ const Utility = {
   createHash: (password) => {
     return new Promise((resolve, reject) => {
       bcrypt.hash(password, salt, (err, hash) => {
-        console.log("Bcrypt hash");
         err ? reject(err) : resolve(hash);
       });
     });
@@ -148,13 +147,13 @@ const Utility = {
     }
     return status === "Success"
       ? {
-          status,
-          data: res,
-        }
+        status,
+        data: res,
+      }
       : {
-          status,
-          msg: res,
-        };
+        status,
+        msg: res,
+      };
   },
 };
 

@@ -7,6 +7,7 @@
  */
 
 const Sequelize = require("sequelize");
+
 const sequelize = require("../../sequelize");
 
 const LoanTrackingModel = sequelize.define(
@@ -16,22 +17,23 @@ const LoanTrackingModel = sequelize.define(
       type: Sequelize.INTEGER,
     },
     status: {
-      type: Sequelize.ENUM(
+      type: Sequelize.ENUM,
+      values: [
         "submitted",
         "under_review",
         "approved",
         "hold",
         "disbursed",
         "rejected"
-      ),
+      ],
     },
     updated_at: {
-      type: Sequelize.DATE,
+      type: 'Timestamp',
     },
   },
   {
-    timestamps: false,
     freezeTableName: true,
+    timestamps: false,
   }
 );
 

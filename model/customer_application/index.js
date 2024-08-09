@@ -10,20 +10,38 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../../sequelize");
 
-const CustomerLoanApplication = sequelize.define(
-  "loan_application",
+const CustomerApplication = sequelize.define(
+  "customer_application",
   {
-    provider_id: {
-      type: Sequelize.INTEGER,
-    },
     customer_id: {
       type: Sequelize.INTEGER,
     },
     amount: {
-      type: Sequelize.STRING,
+      type: Sequelize.DECIMAL,
     },
     tenure: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
+    },
+    interest_rate: {
+      type: Sequelize.DECIMAL,
+    },
+    emi_amount: {
+      type: Sequelize.DECIMAL,
+    },
+    emi_count: {
+      type: Sequelize.INTEGER,
+    },
+    application_date: {
+      type: Sequelize.DATE,
+    },
+    start_date: {
+      type: Sequelize.DATE,
+    },
+    end_date: {
+      type: Sequelize.DATE,
+    },
+    last_updated: {
+      type: "Timestamp",
     },
   },
   {
@@ -32,4 +50,4 @@ const CustomerLoanApplication = sequelize.define(
   }
 );
 
-module.exports = CustomerLoanApplication;
+module.exports = CustomerApplication;

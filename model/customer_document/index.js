@@ -14,22 +14,14 @@ const CustomerDocumentModel = sequelize.define(
   "customer_document",
   {
     customer_id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      references: {
-        model: "customers",
-        key: "id",
-      },
+      type: Sequelize.INTEGER
     },
     document_url: {
-      type: Sequelize.STRING,
-      allowNull: false,
+      type: Sequelize.STRING
     },
     created_at: {
-      type: "TIMESTAMP",
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-      allowNull: false,
-    },
+      type: "TIMESTAMP"
+    }
   },
   {
     freezeTableName: true,

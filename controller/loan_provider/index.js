@@ -6,7 +6,7 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 const LoanProviderModel = require("../../model/loan_provider");
-const { formatResponse } = require("../../utility");
+const Utility = require("../../utility");
 
 const LoanProviderController = {
   getLoanProvider: async (req, res) => {
@@ -19,13 +19,13 @@ const LoanProviderController = {
       const { count, rows } = list;
       console.log(list, "response");
       if (count > 0) {
-        res.status(200).send(formatResponse(200, { count, rows }));
+        res.status(200).send(Utility.formatResponse(200, { count, rows }));
       } else {
-        res.status(404).send(formatResponse(404, `No Data Found`));
+        res.status(404).send(Utility.formatResponse(404, `No Data Found`));
       }
     } catch (err) {
       console.error("Error fetching loan providers:", err);
-      res.status(500).send(formatResponse(500, err));
+      res.status(500).send(Utility.formatResponse(500, err));
     }
   },
 
@@ -33,10 +33,10 @@ const LoanProviderController = {
     const payload = req.body;
     try {
       const loanProvider = await LoanProviderModel.create({ ...payload });
-      res.status(200).send(formatResponse(200, loanProvider));
+      res.status(200).send(Utility.formatResponse(200, loanProvider));
     } catch (err) {
       console.error("Error creating loan provider:", err);
-      res.status(500).send(formatResponse(500, err));
+      res.status(500).send(Utility.formatResponse(500, err));
     }
   },
 };

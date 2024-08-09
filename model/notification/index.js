@@ -7,27 +7,29 @@
  */
 
 const Sequelize = require("sequelize");
+
 const sequelize = require("../../sequelize");
 
 const NotificationModel = sequelize.define(
   "notification",
   {
+    customer_id: {
+      type: Sequelize.INTEGER,
+    },
     message: {
       type: Sequelize.STRING,
     },
     type: {
       type: Sequelize.STRING,
     },
-    user_id: {
-      type: Sequelize.INTEGER,
-    },
     status: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM,
+      values: ['pending', 'sent', 'error']
     },
   },
   {
-    timestamps: false,
     freezeTableName: true,
+    timestamps: false,
   }
 );
 

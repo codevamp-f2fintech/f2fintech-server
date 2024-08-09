@@ -17,11 +17,10 @@ const NotificationController = {
     })
       .then((list) => {
         const { count, rows } = list;
-        if (count > 0) {
-          res.status(200).send(Utility.formatResponse(200, { count, rows }));
-        } else {
+        count > 0 ?
+          res.status(200).send(Utility.formatResponse(200, { count, rows }))
+          :
           res.status(404).send(Utility.formatResponse(404, "No Data Found"));
-        }
       })
       .catch((err) => {
         res.status(500).send(Utility.formatResponse(500, err.message));

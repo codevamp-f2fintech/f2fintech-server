@@ -7,7 +7,7 @@
  */
 
 const CustomerReviewModel = require("../../model/customer_review");
-const { formatResponse } = require("../../utility");
+const Utility = require("../../utility");
 
 const CustomerReviewController = {
   getCustomerReview: (req, res) => {
@@ -20,8 +20,8 @@ const CustomerReviewController = {
         .then((list) => {
           const { count, rows } = list;
           count > 0
-            ? resolve(res.status(200).send(formatResponse(200, { count, rows })))
-            : resolve(res.status(404).send(formatResponse(404, `No Data Found`)));
+            ? resolve(res.status(200).send(Utility.formatResponse(200, { count, rows })))
+            : resolve(res.status(404).send(Utility.formatResponse(404, `No Data Found`)));
         })
         .catch((err) => {
           reject(res.status(500).send(formatResponse(500, err)));
@@ -34,10 +34,10 @@ const CustomerReviewController = {
     return new Promise((resolve, reject) => {
       CustomerReviewModel.create({ ...payload })
         .then((customerReview) => {
-          resolve(res.status(200).send(formatResponse(200, customerReview))); // Corrected response
+          resolve(res.status(200).send(Utility.formatResponse(200, customerReview)));
         })
         .catch((err) => {
-          reject(res.status(500).send(formatResponse(500, err)));
+          reject(res.status(500).send(Utility.formatResponse(500, err)));
         });
     });
   },

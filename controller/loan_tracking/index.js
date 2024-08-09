@@ -10,7 +10,7 @@ const LoanTrackingModel = require("../../model/loan_tracking");
 const Utility = require("../../utility");
 
 const LoanTrackingController = {
-  getLoanTracking: (req, res, next) => {
+  getLoanTracking: (req, res) => {
     const { limit = 5, offset = 0 } = req.body; // default values
     return new Promise((resolve, reject) => {
       LoanTrackingModel.findAndCountAll({
@@ -19,7 +19,6 @@ const LoanTrackingController = {
       })
         .then((list) => {
           const { count, rows } = list;
-          console.log(list, "response");
           if (count > 0) {
             resolve(res.status(200).send(Utility.formatResponse(200, { count, rows })));
           } else {
@@ -33,7 +32,7 @@ const LoanTrackingController = {
     });
   },
 
-  createLoanTracking: (req, res, next) => {
+  createLoanTracking: (req, res) => {
     const payload = req.body;
 
     return new Promise((resolve, reject) => {
