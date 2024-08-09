@@ -14,13 +14,13 @@ dotenv.config({
 });
 
 module.exports = {
-  NODE_ENV: process.env.NODE_ENV || "local",
-  HOST: process.env.HOST || "localhost",
+  NODE_ENV: process.env.NODE_ENV || "development",
+  HOST: process.env.HOST || "f2-fintech-web.c5wyoe202y9d.ap-southeast-1.rds.amazonaws.com",
   PORT: process.env.PORT || 8080,
-  DB: process.env.DB || "f2-fintech",
+  DB: process.env.DB || "f2_fintech_web",
   DB_PORT: process.env.DB_PORT || 3306,
   DB_USERNAME: process.env.DB_USERNAME || "root",
-  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_PASSWORD: process.env.DB_PASSWORD || 'FiNtECh2',
   SALT: process.env.SALT || 12,
   SECRET: process.env.SECRET || "F#2@FIN!&TECH%20",
 };
