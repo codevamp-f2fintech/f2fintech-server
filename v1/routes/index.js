@@ -28,7 +28,7 @@ router.get("/test", (req, res) => {
 });
 
 //-----------------------------------CUSTOMER---------------------------------------
-router.post("/create-customer", checkAuthenticated, CustomerController.register);
+router.post("/create-customer", CustomerController.register);
 router.patch(
   "/update-customer",
   checkAuthenticated,

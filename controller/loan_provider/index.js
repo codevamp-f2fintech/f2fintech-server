@@ -17,7 +17,6 @@ const LoanProviderController = {
       });
 
       const { count, rows } = list;
-      console.log(list, "response");
       if (count > 0) {
         res.status(200).send(Utility.formatResponse(200, { count, rows }));
       } else {
