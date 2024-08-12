@@ -9,6 +9,7 @@
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const session = require("express-session");
 
 const config = require("./config");
@@ -36,6 +37,7 @@ app.use(
 );
 
 app.use(cors(corsOptions));
+app.use(fileUpload({ limits: { fileSize: 20000000 }, abortOnLimit: true })); //express-fileupload middleware
 app.use(rateLimiter);
 
 app.use(

@@ -10,17 +10,43 @@ const CustomerDocumentModel = require("../../model/customer_document");
 const Utility = require("../../utility");
 
 const CustomerDocumentController = {
-  createCustomerDocument: (req, res, next) => {
+  //create document inside database
+  createDocument: (req, res) => {
     const payload = req.body;
     return new Promise((resolve, reject) => {
       CustomerDocumentModel.create(payload)
-        .then((result) => {
-          resolve(res.status(200).send(Utility.formatResponse(200, result)));
+        .then(() => {
+          resolve(res.status(200).send(Utility.formatResponse(200, "success")));
         })
         .catch((err) => {
-          reject(res.status(500).send(Utility.formatResponse(500, err)));
+          resolve(res.status(409).send(Utility.formatResponse(409, err)));
         });
     });
+  },
+
+  // upload the document to s3 bucket
+  uploadDocumentToS3: async (req, res) => {
+    try {
+      const { document } = req.files;
+      const { folder } = req.body;
+      console.log("data>>>>", folder, req.body);
+
+      // If no document submitted, exit
+      if (!document || !folder) {
+        return res
+          .status(400)
+          .send(Utility.formatResponse(400, "No file uploaded"));
+      }
+      // if (!/^image/.test(image.mimetype)) {
+      //   return res
+      //     .status(400)
+      //     .send(Utility.formatResponse(400, "Invalid file type"));
+      // }
+      Utility.uploadToS3(folder, document, res);
+    } catch (err) {
+      console.log("err>>", err);
+      res.status(500).send(Utility.formatResponse(500, err));
+    }
   },
 
   getCustomerDocument: (req, res, next) => {

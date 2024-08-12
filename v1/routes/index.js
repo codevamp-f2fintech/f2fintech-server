@@ -38,10 +38,9 @@ router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
 router.post("/login", CustomerController.loginCustomer);
 
 //---------------------------------CUSTOMER DOCUMENT------------------------------------
-router.post(
-  "/create-customer-document",
-  CustomerDocumentController.createCustomerDocument
-);
+router.post("/create-document", CustomerDocumentController.createDocument);
+router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
+
 router.get(
   "/get-customer-document",
   CustomerDocumentController.getCustomerDocument
@@ -95,6 +94,5 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
-
 
 module.exports = router;

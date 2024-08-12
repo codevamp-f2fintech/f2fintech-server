@@ -6,6 +6,7 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
+const AWS = require("aws-sdk");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -13,6 +14,10 @@ const config = require("../config");
 
 const salt = config.SALT;
 const secret = config.SECRET;
+const bucketName = config.BUCKET;
+const region = config.REGION;
+const accessKey = config.ACCESS_KEY;
+const secretKey = config.SECRET_KEY;
 
 const Utility = {
   /**
@@ -57,6 +62,47 @@ const Utility = {
       bcrypt.compare(password, hash, (err, isMatch) => {
         err ? reject(err) : resolve(isMatch);
       });
+    });
+  },
+
+  // upload the document to s3 bucket
+  uploadToS3: (folder, file, res) => {
+    // Set the region and access keys
+    AWS.config.update({
+      region: region,
+      accessKeyId: accessKey,
+      secretAccessKey: secretKey,
+    });
+
+    // Create a new instance of the S3 class
+    const s3 = new AWS.S3();
+
+    // Set the parameters for the file you want to upload
+    const params = {
+      Bucket: bucketName,
+      Key: folder,
+      Body: file.data,
+    };
+
+    // Upload the file to S3
+    return s3.upload(params, (err, data) => {
+      if (err) {
+        console.log("Error uploading file:", err);
+        return res
+          .status(500)
+          .send(
+            Utility.formatResponse(
+              500,
+              "Error occurred while uploading the file"
+            )
+          );
+      } else {
+        console.log(
+          "File uploaded successfully. File location:",
+          data.Location
+        );
+        return res.status(200).send(Utility.formatResponse(200, data.Location));
+      }
     });
   },
 
@@ -147,13 +193,13 @@ const Utility = {
     }
     return status === "Success"
       ? {
-        status,
-        data: res,
-      }
+          status,
+          data: res,
+        }
       : {
-        status,
-        msg: res,
-      };
+          status,
+          msg: res,
+        };
   },
 };
 
