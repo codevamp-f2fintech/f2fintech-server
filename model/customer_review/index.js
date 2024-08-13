@@ -9,12 +9,17 @@
 const Sequelize = require("sequelize");
 
 const sequelize = require("../../sequelize");
+const CustomerModel = require("../customer");
 
 const CustomerReviewModel = sequelize.define(
   "customer_review",
   {
     customer_id: {
       type: Sequelize.INTEGER,
+      references: {
+        model: CustomerModel,
+        key: "id",
+      },
     },
     rating: {
       type: Sequelize.DECIMAL,
