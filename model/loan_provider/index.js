@@ -10,7 +10,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../sequelize");
 
 const LoanProviderModel = sequelize.define(
-  "loan_providers",
+  "loan_provider",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -21,11 +21,11 @@ const LoanProviderModel = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    home: {
+    is_home: {
       type: Sequelize.TINYINT, // Using TINYINT for boolean representation
       allowNull: false,
     },
-    homeimage: {
+    home_image: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -44,11 +44,6 @@ const LoanProviderModel = sequelize.define(
     long_description: {
       type: Sequelize.TEXT,
       allowNull: true,
-    },
-    isfavourite: {
-      type: Sequelize.TINYINT,
-      allowNull: false,
-      defaultValue: 0,
     },
   },
   {

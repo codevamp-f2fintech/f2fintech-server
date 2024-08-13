@@ -22,10 +22,9 @@ const FavouriteApiController = require("../../controller/favourite_api");
 
 const CustomerDocumentController = require("../../controller/customer_document");
 const { importLoanProviders } = require("../../controller/loan_provider");
-
+const LoanProvidersController = require("../../controller/lender_poviders");
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
-
 //-----------------------------------TEST---------------------------------------
 router.get("/test", (req, res) => {
   res.status(200).json({ status: 200, message: "API Working Fine." });
@@ -38,6 +37,11 @@ router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
 //   "/loan-providers/toggle-favorite/:id",
 //   LoanProviderController.toggleFavorite
 // );
+
+//-----------------------------------Favourite API---------------------------------------
+
+router.get('/get-favourite-api', FavouriteApiController.getFavouriteApi);
+router.post('/create-favourite-api', FavouriteApiController.createFavouriteApi);
 
 //-----------------------------------CUSTOMER---------------------------------------
 router.post("/create-customer", CustomerController.register);
@@ -96,5 +100,9 @@ router.get("/get-loan-status", LoanStatusController.getLoanStatus);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+
+//-----------------------------------Import_Excel---------------------------------------
+router.post("/import-loan-providers", upload.single("file"), LoanProvidersController);
 
 module.exports = router;

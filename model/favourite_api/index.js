@@ -12,7 +12,7 @@ const sequelize = require("../../sequelize");
 const { underscoredIf } = require("sequelize/lib/utils");
 
 const FavouriteApiModel = sequelize.define(
-  "customer_favourite_provider",
+  "customer_favourite",
   {
     loan_provider_id: {
       type: Sequelize.INTEGER,
