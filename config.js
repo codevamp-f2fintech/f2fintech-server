@@ -23,10 +23,10 @@ module.exports = {
   DB_PASSWORD: process.env.DB_PASSWORD || "",
   SALT: process.env.SALT || 12,
   SECRET: process.env.SECRET || "F#2@FIN!&TECH%20",
-  BUCKET: process.env.BUCKET_NAME || "f2fintechcustomerdoc",
-  REGION= process.env.REGION || 'ap-southeast-1',
-  ACCESS_KEY: process.env.ACCESS_KEY_ID || 'AKIAQGYBPSIA6UMSD4UQ',
-  SECRET_KEY: process.env.SECRET_KEY_ID || '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',
+  BUCKET: process.env.BUCKET_NAME,
+  REGION: process.env.REGION || 'ap-southeast-1',
+  ACCESS_KEY: process.env.ACCESS_KEY_ID,
+  SECRET_KEY: process.env.SECRET_KEY_ID,
   S3_PATHNAME: process.env.S3_PATHNAME || 'https://f2fintechcustomerdoc.s3.ap-southeast-1.amazonaws.com/'
 
 };
