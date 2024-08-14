@@ -7,6 +7,7 @@
  */
 
 const express = require("express");
+const multer = require("multer");
 
 const CustomerController = require("../../controller/customer");
 const CustomerDocumentController = require("../../controller/customer_document");
@@ -19,6 +20,8 @@ const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
 
 const { checkAuthenticated } = require("../../config/passportConfig");
+const LoanProvidersController = require("../../controller/lender_providers");
+const upload = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
@@ -98,6 +101,7 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
-
+//--------------------------LOAN PROVIDERS API----------------------------
+router.post("/import-loan-providers", upload.single("file"), LoanProvidersController);
 
 module.exports = router;
