@@ -82,6 +82,7 @@ const Utility = {
       Bucket: bucketName,
       Key: folder,
       Body: file.data,
+      ContentType: file.mimetype,
     };
 
     // Upload the file to S3
