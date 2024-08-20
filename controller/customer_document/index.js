@@ -29,7 +29,7 @@ const CustomerDocumentController = {
     try {
       const { document } = req.files;
       const { folder } = req.body;
-      console.log("data>>>>", folder, req.body);
+      console.log("data>>>>", folder, req.files);
 
       // If no document submitted, exit
       if (!document || !folder) {
@@ -37,11 +37,25 @@ const CustomerDocumentController = {
           .status(400)
           .send(Utility.formatResponse(400, "No file uploaded"));
       }
-      // if (!/^image/.test(image.mimetype)) {
-      //   return res
-      //     .status(400)
-      //     .send(Utility.formatResponse(400, "Invalid file type"));
-      // }
+
+      // Validate file type (images, .txt, .docx)
+      const allowedMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/webp",
+        "text/plain",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+        "application/msword", // .doc
+      ];
+
+      if (!allowedMimeTypes.includes(document.mimetype)) {
+        return res
+          .status(400)
+          .send(Utility.formatResponse(400, "Invalid file type"));
+      }
+      
       Utility.uploadToS3(folder, document, res);
     } catch (err) {
       console.log("err>>", err);
