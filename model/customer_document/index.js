@@ -14,14 +14,27 @@ const CustomerDocumentModel = sequelize.define(
   "customer_document",
   {
     customer_id: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     document_url: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     created_at: {
-      type: "TIMESTAMP"
-    }
+      type: "TIMESTAMP",
+    },
+    type: {
+      type: Sequelize.ENUM,
+      values: [
+        "aadhaar front",
+        "aadhaar back",
+        "pancard",
+        "bank statement",
+        "form 16",
+        "payslips",
+        "profile",
+        "photo",
+      ],
+    },
   },
   {
     freezeTableName: true,
