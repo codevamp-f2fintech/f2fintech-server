@@ -29,7 +29,7 @@ const CustomerDocumentController = {
     try {
       const { document } = req.files;
       const { folder } = req.body;
-      console.log("data>>>>", folder, req.files);
+      console.log("folder>>>>", folder);
 
       // If no document submitted, exit
       if (!document || !folder) {
@@ -38,9 +38,11 @@ const CustomerDocumentController = {
           .send(Utility.formatResponse(400, "No file uploaded"));
       }
 
-      // Validate file type (images, .txt, .docx)
+      // Validate file type (images, .txt, .doc, .docx)
       const allowedMimeTypes = [
+        "image/avif",
         "image/jpeg",
+        "image/jpg",
         "image/png",
         "image/gif",
         "image/bmp",
@@ -55,7 +57,7 @@ const CustomerDocumentController = {
           .status(400)
           .send(Utility.formatResponse(400, "Invalid file type"));
       }
-      
+
       Utility.uploadToS3(folder, document, res);
     } catch (err) {
       console.log("err>>", err);
@@ -63,7 +65,8 @@ const CustomerDocumentController = {
     }
   },
 
-  getCustomerDocument: (req, res, next) => {
+  // Get document from database.
+  getCustomerDocument: (req, res) => {
     const { limit = 10, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
       CustomerDocumentModel.findAndCountAll({
@@ -86,7 +89,7 @@ const CustomerDocumentController = {
           );
         });
     });
-  },
+  }
 };
 
 module.exports = CustomerDocumentController;
