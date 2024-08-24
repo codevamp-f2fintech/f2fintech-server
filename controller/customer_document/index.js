@@ -65,21 +65,26 @@ const CustomerDocumentController = {
     }
   },
 
-  // Get document from database.
-  getCustomerDocument: (req, res) => {
-    const { limit = 10, offset = 0 } = req.body;
+  // Get profile photo from database.
+  getCustomerProfilePhoto: (req, res) => {
+    const { id } = req.params;
+
     return new Promise((resolve, reject) => {
-      CustomerDocumentModel.findAndCountAll({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
+      CustomerDocumentModel.findOne({
+        attributes: ['document_url'],
+        where: {
+          customer_id: id,
+          type: 'profile'
+        }
       })
-        .then((list) => {
-          const { count, rows } = list;
-          if (count > 0) {
-            resolve(res.status(200).send(Utility.formatResponse(200, rows)));
+        .then((profile) => {
+          if (profile) {
+            resolve(
+              res.status(200).send(Utility.formatResponse(200, profile))
+            );
           } else {
             resolve(
-              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
             );
           }
         })

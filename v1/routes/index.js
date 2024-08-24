@@ -42,8 +42,8 @@ router.post("/create-document", CustomerDocumentController.createDocument);
 router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
 
 router.get(
-  "/get-customer-document",
-  CustomerDocumentController.getCustomerDocument
+  "/get-customer-document/:id",
+  CustomerDocumentController.getCustomerProfilePhoto
 );
 //-----------------------------------RATING AND REVIEW---------------------------------------
 router.get("/get-rating", CustomerReviewController.getCustomerReview);
