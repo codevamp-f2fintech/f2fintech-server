@@ -13,7 +13,7 @@ const CustomerDocumentController = require("../../controller/customer_document")
 const CustomerInfoController = require("../../controller/customer_info");
 const CustomerReviewController = require("../../controller/customer_review");
 const CustomerFavouriteController = require("../../controller/customer_favourite");
-const CustomerLoanApplicationController = require("../../controller/customer_application");
+const CustomerApplicationController = require("../../controller/customer_application");
 const LoanProviderController = require("../../controller/loan_provider");
 const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
@@ -74,16 +74,16 @@ router.post(
 
 //-----------------------------------LOAN APPLICATION---------------------------------------
 router.post(
-  "/create-loanapplication",
-  CustomerLoanApplicationController.createLoanApplication
+  "/create-application",
+  CustomerApplicationController.createApplication
 );
 router.get(
-  "/get-loanapplication",
-  CustomerLoanApplicationController.getLoanApplication
+  "/get-application",
+  CustomerApplicationController.getApplication
 );
 router.get(
-  "/get-loanapplication/:id",
-  CustomerLoanApplicationController.getLoanApplicationById
+  "/get-application/:id",
+  CustomerApplicationController.getApplicationById
 );
 
 //-----------------------------------LOAN PROVIDER---------------------------------------
