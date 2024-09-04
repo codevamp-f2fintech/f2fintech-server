@@ -98,9 +98,7 @@ const CustomerController = {
               `,
             };
 
-            sendEmail(mailOptions).catch((err) =>
-              console.error("Error sending email:", err)
-            );
+            sendEmail(mailOptions);
             const token = Utility.getSignedToken(customer.id);
             resolve(
               res
