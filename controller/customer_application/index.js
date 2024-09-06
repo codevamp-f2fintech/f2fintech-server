@@ -54,10 +54,10 @@ const CustomerApplicationController = {
     const { id } = req.params;
 
     return new Promise((resolve, reject) => {
-      CustomerLoanApplication.findOne({ where: { id } })
-        .then((result) => {
-          if (result) {
-            resolve(res.status(200).send(Utility.formatResponse(200, result)));
+      CustomerLoanApplication.findOne({ where: { customer_id: id } })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, data)));
           } else {
             resolve(
               res.status(404).send(Utility.formatResponse(404, `No Data Found`))

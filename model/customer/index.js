@@ -33,6 +33,9 @@ const CustomerModel = sequelize.define(
       type: Sequelize.ENUM,
       values: ["active", "inactive"]
     },
+    dob: {
+      type: Sequelize.DATE,
+    },
     created_at: {
       type: "Timestamp"
     },

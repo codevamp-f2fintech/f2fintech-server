@@ -82,7 +82,7 @@ router.get(
   CustomerApplicationController.getApplication
 );
 router.get(
-  "/get-application/:id",
+  "/get-application-by-id/:id",
   CustomerApplicationController.getApplicationById
 );
 
