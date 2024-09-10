@@ -12,7 +12,7 @@ const sequelize = require("../../sequelize");
 
 const CustomerReviewController = {
   getCustomerReview: (req, res) => {
-    const query = `SELECT cus.name,cus.email,cusr.rating,cusr.review,cusr.created_at, cus_info.city, cus_info.state
+    const query = `SELECT cus.id,cus.name,cus.email,cusr.rating,cusr.review,cusr.created_at, cus_info.city, cus_info.state
                     FROM customer_review cusr
                     JOIN customer cus ON cus.id = cusr.customer_id
                     LEFT JOIN customer_info cus_info ON cus_info.customer_id = cus.id
@@ -26,13 +26,13 @@ const CustomerReviewController = {
         .then((reviews) => {
           reviews.length > 0
             ? resolve(
-                res.status(200).send(Utility.formatResponse(200, { reviews }))
-              )
+              res.status(200).send(Utility.formatResponse(200, { reviews }))
+            )
             : resolve(
-                res
-                  .status(404)
-                  .send(Utility.formatResponse(404, `No Data Found`))
-              );
+              res
+                .status(404)
+                .send(Utility.formatResponse(404, `No Data Found`))
+            );
         })
         .catch((err) => {
           console.log("error==>>", err);

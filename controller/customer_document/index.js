@@ -29,7 +29,7 @@ const CustomerDocumentController = {
     try {
       const { document } = req.files;
       const { folder } = req.body;
-      console.log("data>>>>", folder, req.body);
+      console.log("folder>>>>", folder);
 
       // If no document submitted, exit
       if (!document || !folder) {
@@ -37,11 +37,27 @@ const CustomerDocumentController = {
           .status(400)
           .send(Utility.formatResponse(400, "No file uploaded"));
       }
-      // if (!/^image/.test(image.mimetype)) {
-      //   return res
-      //     .status(400)
-      //     .send(Utility.formatResponse(400, "Invalid file type"));
-      // }
+
+      // Validate file type (images, .txt, .doc, .docx)
+      const allowedMimeTypes = [
+        "image/avif",
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/webp",
+        "text/plain",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+        "application/msword", // .doc
+      ];
+
+      if (!allowedMimeTypes.includes(document.mimetype)) {
+        return res
+          .status(400)
+          .send(Utility.formatResponse(400, "Invalid file type"));
+      }
+
       Utility.uploadToS3(folder, document, res);
     } catch (err) {
       console.log("err>>", err);
@@ -49,20 +65,26 @@ const CustomerDocumentController = {
     }
   },
 
-  getCustomerDocument: (req, res, next) => {
-    const { limit = 10, offset = 0 } = req.body;
+  // Get profile photo from database.
+  getCustomerProfilePhoto: (req, res) => {
+    const { id } = req.params;
+
     return new Promise((resolve, reject) => {
-      CustomerDocumentModel.findAndCountAll({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
+      CustomerDocumentModel.findOne({
+        attributes: ['document_url'],
+        where: {
+          customer_id: id,
+          type: 'profile'
+        }
       })
-        .then((list) => {
-          const { count, rows } = list;
-          if (count > 0) {
-            resolve(res.status(200).send(Utility.formatResponse(200, rows)));
+        .then((profile) => {
+          if (profile) {
+            resolve(
+              res.status(200).send(Utility.formatResponse(200, profile))
+            );
           } else {
             resolve(
-              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
             );
           }
         })
@@ -72,7 +94,7 @@ const CustomerDocumentController = {
           );
         });
     });
-  },
+  }
 };
 
 module.exports = CustomerDocumentController;

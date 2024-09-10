@@ -13,7 +13,7 @@ const CustomerDocumentController = require("../../controller/customer_document")
 const CustomerInfoController = require("../../controller/customer_info");
 const CustomerReviewController = require("../../controller/customer_review");
 const CustomerFavouriteController = require("../../controller/customer_favourite");
-const CustomerLoanApplicationController = require("../../controller/customer_application");
+const CustomerApplicationController = require("../../controller/customer_application");
 const LoanProviderController = require("../../controller/loan_provider");
 const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
@@ -44,12 +44,9 @@ router.post("/create-document", CustomerDocumentController.createDocument);
 router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
 
 router.get(
-  "/get-customer-document",
-  CustomerDocumentController.getCustomerDocument
+  "/get-customer-document/:id",
+  CustomerDocumentController.getCustomerProfilePhoto
 );
-//-----------------------------------RATING AND REVIEW---------------------------------------
-router.get("/get-rating", CustomerReviewController.getCustomerReview);
-router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
 //-----------------------------------QUERY---------------------------------------
 router.post("/create-query", QueryController.createQuery);
@@ -85,18 +82,18 @@ router.post(
   CustomerReviewController.createCustomerReview
 );
 
-//-----------------------------------LOAN APPLICATION---------------------------------------
+//-----------------------------------CUSTOMER APPLICATION-----------------------------------
 router.post(
-  "/create-loanapplication",
-  CustomerLoanApplicationController.createLoanApplication
+  "/create-application",
+  CustomerApplicationController.createApplication
 );
 router.get(
-  "/get-loanapplication",
-  CustomerLoanApplicationController.getLoanApplication
+  "/get-applications",
+  CustomerApplicationController.getApplications
 );
 router.get(
-  "/get-loanapplication/:id",
-  CustomerLoanApplicationController.getLoanApplicationById
+  "/get-application-by-id/:id",
+  CustomerApplicationController.getApplicationById
 );
 
 //-----------------------------------LOAN PROVIDER---------------------------------------
@@ -110,5 +107,9 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+//-----------------------------------RATING AND REVIEW---------------------------------------
+router.get("/get-rating", CustomerReviewController.getCustomerReview);
+router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
 module.exports = router;

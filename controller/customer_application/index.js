@@ -9,13 +9,14 @@
 const CustomerLoanApplication = require("../../model/customer_application");
 const Utility = require("../../utility");
 
-const CustomerLoanApplicationController = {
-  createLoanApplication: (req, res) => {
+const CustomerApplicationController = {
+  createApplication: (req, res) => {
     const payload = req.body;
+
     return new Promise((resolve, reject) => {
       CustomerLoanApplication.create(payload)
         .then((result) => {
-          resolve(res.status(200).send(Utility.formatResponse(200, result)));
+          resolve(res.status(200).send(Utility.formatResponse(200, result.id)));
         })
         .catch((err) => {
           reject(res.status(500).send(Utility.formatResponse(500, err)));
@@ -23,8 +24,9 @@ const CustomerLoanApplicationController = {
     });
   },
 
-  getLoanApplication: (req, res) => {
+  getApplications: (req, res) => {
     const { limit = 10, offset = 0 } = req.body; // default values
+
     return new Promise((resolve, reject) => {
       CustomerLoanApplication.findAndCountAll({
         limit: parseInt(limit),
@@ -48,13 +50,14 @@ const CustomerLoanApplicationController = {
     });
   },
 
-  getLoanApplicationById: (req, res) => {
+  getApplicationById: (req, res) => {
     const { id } = req.params;
+
     return new Promise((resolve, reject) => {
-      CustomerLoanApplication.findOne({ where: { id } })
-        .then((result) => {
-          if (result) {
-            resolve(res.status(200).send(Utility.formatResponse(200, result)));
+      CustomerLoanApplication.findOne({ where: { customer_id: id } })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, data)));
           } else {
             resolve(
               res.status(404).send(Utility.formatResponse(404, `No Data Found`))
@@ -70,4 +73,4 @@ const CustomerLoanApplicationController = {
   },
 };
 
-module.exports = CustomerLoanApplicationController;
+module.exports = CustomerApplicationController;

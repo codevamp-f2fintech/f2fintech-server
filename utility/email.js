@@ -8,6 +8,7 @@
 
 const nodemailer = require("nodemailer");
 
+
 /**
  * Send an email
  * @param {String} to - recipient email address
@@ -27,13 +28,9 @@ const sendEmail = (mailOptions) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log("getting email error", error);
-        reject(error);
+        resolve();
       } else {
-        resolve(
-          res
-            .status(200)
-            .send(Utility.formatResponse(200, { token, id: customer.id }))
-        );
+        resolve();
       }
     });
   });
