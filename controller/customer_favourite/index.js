@@ -48,6 +48,28 @@ const CustomerFavouriteController = {
         });
     });
   },
+
+  removeFavourite: async (req, res) => {
+    const {  loan_provider_id } = req.body;
+
+    if (!loan_provider_id) {
+      return res.status(400).send(Utility.formatResponse(400, "Missing loan_provider_id"));
+    }
+
+    try {
+      const result = await CustomerFavouriteModel.destroy({
+        where: {  loan_provider_id:  loan_provider_id },
+      });
+
+      if (result) {
+        res.status(200).send(Utility.formatResponse(200, "Favourite removed successfully"));
+      } else {
+        res.status(404).send(Utility.formatResponse(404, "Favourite not found"));
+      }
+    } catch (err) {
+      res.status(500).send(Utility.formatResponse(500, err.message));
+    }
+  },
 };
 
 module.exports = CustomerFavouriteController;

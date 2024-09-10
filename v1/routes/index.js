@@ -49,6 +49,7 @@ router.get(
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
 router.get("/get-favourite", CustomerFavouriteController.getFavourite);
+router.post("/remove-favourite", CustomerFavouriteController.removeFavourite);
 
 //-----------------------------------CUSTOMER INFO---------------------------------------
 router.post("/create-customer-info", CustomerInfoController.createCustomerInfo);
