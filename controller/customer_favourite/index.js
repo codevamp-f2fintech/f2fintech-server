@@ -24,7 +24,7 @@ const CustomerFavouriteController = {
     });
   },
 
-  getFavourite: (req, res) => {
+  getFavourites: (req, res) => {
     const { limit = 10, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
       CustomerFavouriteModel.findAndCountAll({
@@ -49,27 +49,30 @@ const CustomerFavouriteController = {
     });
   },
 
-  removeFavourite: async (req, res) => {
-    const {  loan_provider_id } = req.body;
+  // Remove Favourite from db by id
+  removeFavouriteById: async (req, res) => {
+    const { id } = req.params;
 
-    if (!loan_provider_id) {
-      return res.status(400).send(Utility.formatResponse(400, "Missing loan_provider_id"));
-    }
-
-    try {
-      const result = await CustomerFavouriteModel.destroy({
-        where: {  loan_provider_id:  loan_provider_id },
-      });
-
-      if (result) {
-        res.status(200).send(Utility.formatResponse(200, "Favourite removed successfully"));
-      } else {
-        res.status(404).send(Utility.formatResponse(404, "Favourite not found"));
-      }
-    } catch (err) {
-      res.status(500).send(Utility.formatResponse(500, err.message));
-    }
-  },
+    return new Promise((resolve, reject) => {
+      CustomerFavouriteModel.destroy({
+        where: { loan_provider_id: id }
+      })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, 'Removed Successfully')));
+          } else {
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+            );
+          }
+        })
+        .catch((err) => {
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
+        });
+    });
+  }
 };
 
 module.exports = CustomerFavouriteController;

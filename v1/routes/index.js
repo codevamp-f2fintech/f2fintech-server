@@ -48,8 +48,8 @@ router.get(
 
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
-router.get("/get-favourite", CustomerFavouriteController.getFavourite);
-router.post("/remove-favourite", CustomerFavouriteController.removeFavourite);
+router.get("/get-favourites", CustomerFavouriteController.getFavourites);
+router.get("/remove-favourite-by-id/:id", CustomerFavouriteController.removeFavouriteById);
 
 //-----------------------------------CUSTOMER INFO---------------------------------------
 router.post("/create-customer-info", CustomerInfoController.createCustomerInfo);
@@ -99,5 +99,6 @@ router.post("/create-notification", NotificationController.createNotification);
 //-----------------------------------RATING AND REVIEW---------------------------------------
 router.get("/get-rating", CustomerReviewController.getCustomerReview);
 router.post("/create-rating", CustomerReviewController.createCustomerReview);
+
 
 module.exports = router;
