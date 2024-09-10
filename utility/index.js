@@ -166,7 +166,7 @@ const Utility = {
    * @return {Object} formatted api response
    */
 
-  formatResponse: (statusCode, res) => {
+  formatResponse: (statusCode, res, count) => {
     let status = "";
     switch (statusCode) {
       case 200:
@@ -192,14 +192,18 @@ const Utility = {
         break;
     }
     return status === "Success"
-      ? {
-          status,
-          data: res,
-        }
+      ? count ? {
+        status,
+        data: res,
+        count: count
+      } : {
+        status,
+        data: res,
+      }
       : {
-          status,
-          msg: res,
-        };
+        status,
+        msg: res,
+      };
   },
 };
 

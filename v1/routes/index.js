@@ -19,6 +19,8 @@ const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
 
 const { checkAuthenticated } = require("../../config/passportConfig");
+const QueryController = require("../../controller/query");
+const QueryResponseController = require("../../controller/query_response");
 
 const router = express.Router();
 
@@ -49,7 +51,18 @@ router.get(
 router.get("/get-rating", CustomerReviewController.getCustomerReview);
 router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
-//--------------------------------CUSTOMER FAVOURITE-------------------------------------
+//-----------------------------------QUERY---------------------------------------
+router.post("/create-query", QueryController.createQuery);
+router.get("/get-query", QueryController.getQueries);
+
+
+//-----------------------------------QUERY RESPONSE---------------------------------------
+router.post("/create-query-response", QueryResponseController.createQueryResponse);
+router.get("/get-query-response", QueryResponseController.getQueryResponse);
+router.put("/update-query-response", QueryResponseController.updateQueryResponse);
+
+
+// --------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
 router.get("/get-favourite", CustomerFavouriteController.getFavourite);
 
