@@ -45,9 +45,6 @@ router.get(
   "/get-customer-document/:id",
   CustomerDocumentController.getCustomerProfilePhoto
 );
-//-----------------------------------RATING AND REVIEW---------------------------------------
-router.get("/get-rating", CustomerReviewController.getCustomerReview);
-router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
@@ -72,14 +69,14 @@ router.post(
   CustomerReviewController.createCustomerReview
 );
 
-//-----------------------------------LOAN APPLICATION---------------------------------------
+//-----------------------------------CUSTOMER APPLICATION-----------------------------------
 router.post(
   "/create-application",
   CustomerApplicationController.createApplication
 );
 router.get(
-  "/get-application",
-  CustomerApplicationController.getApplication
+  "/get-applications",
+  CustomerApplicationController.getApplications
 );
 router.get(
   "/get-application-by-id/:id",
@@ -97,5 +94,9 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+//-----------------------------------RATING AND REVIEW---------------------------------------
+router.get("/get-rating", CustomerReviewController.getCustomerReview);
+router.post("/create-rating", CustomerReviewController.createCustomerReview);
 
 module.exports = router;

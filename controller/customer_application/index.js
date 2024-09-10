@@ -24,7 +24,7 @@ const CustomerApplicationController = {
     });
   },
 
-  getApplication: (req, res) => {
+  getApplications: (req, res) => {
     const { limit = 10, offset = 0 } = req.body; // default values
 
     return new Promise((resolve, reject) => {
