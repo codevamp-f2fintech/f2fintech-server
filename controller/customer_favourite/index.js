@@ -6,15 +6,16 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const Utility = require("../../utility");
 const CustomerFavouriteModel = require("../../model/customer_favourite");
+const Utility = require("../../utility");
 
 const CustomerFavouriteController = {
+  // Create a favourite in the database
   createFavourite: (req, res) => {
     const payload = req.body;
 
     return new Promise((resolve, reject) => {
-      CustomerFavouriteModel.create(payload)
+      CustomerFavouriteModel.create({ ...payload })
         .then((result) => {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
@@ -24,8 +25,29 @@ const CustomerFavouriteController = {
     });
   },
 
+  // Get favourites from db
   getFavourites: (req, res) => {
-    const { limit = 10, offset = 0 } = req.body;
+    const { loan_provider_id, customer_id, limit = 10, offset = 0 } = req.body;
+
+    // run when loan_provider_id and customer_id are provided
+    if (loan_provider_id && customer_id) {
+      return new Promise((resolve, reject) => {
+        CustomerFavouriteModel.findOne({
+          where: { loan_provider_id, customer_id },
+        })
+          .then((favorite) => {
+            if (favorite) {
+              resolve(res.status(200).send(Utility.formatResponse(200, { isFavorite: true })));
+            } else {
+              resolve(res.status(200).send(Utility.formatResponse(200, { isFavorite: false })));
+            }
+          })
+          .catch((err) => {
+            reject(res.status(500).send(Utility.formatResponse(500, err.message)));
+          });
+      });
+    }
+
     return new Promise((resolve, reject) => {
       CustomerFavouriteModel.findAndCountAll({
         limit: parseInt(limit),
@@ -49,13 +71,13 @@ const CustomerFavouriteController = {
     });
   },
 
-  // Remove Favourite from db by id
-  removeFavouriteById: async (req, res) => {
-    const { id } = req.params;
+  // Remove a favourite from the database using loan_provider_id and customer_id
+  removeFavourite: async (req, res) => {
+    const payload = req.body;
 
     return new Promise((resolve, reject) => {
       CustomerFavouriteModel.destroy({
-        where: { loan_provider_id: id }
+        where: { loan_provider_id: payload.loan_provider_id, customer_id: payload.customer_id }
       })
         .then((data) => {
           if (data) {

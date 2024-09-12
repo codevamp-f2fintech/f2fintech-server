@@ -47,9 +47,9 @@ router.get(
 );
 
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
+router.post("/get-favourites", CustomerFavouriteController.getFavourites);
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
-router.get("/get-favourites", CustomerFavouriteController.getFavourites);
-router.get("/remove-favourite-by-id/:id", CustomerFavouriteController.removeFavouriteById);
+router.post("/remove-favourite", CustomerFavouriteController.removeFavourite);
 
 //-----------------------------------CUSTOMER INFO---------------------------------------
 router.post("/create-customer-info", CustomerInfoController.createCustomerInfo);
