@@ -7,6 +7,7 @@
  */
 
 const CustomerFavouriteModel = require("../../model/customer_favourite");
+const sequelize = require("../../sequelize");
 const Utility = require("../../utility");
 
 const CustomerFavouriteController = {
@@ -20,6 +21,7 @@ const CustomerFavouriteController = {
           resolve(res.status(200).send(Utility.formatResponse(200, result)));
         })
         .catch((err) => {
+          console.log(err);
           reject(res.status(500).send(Utility.formatResponse(500, err)));
         });
     });
@@ -37,38 +39,53 @@ const CustomerFavouriteController = {
         })
           .then((favorite) => {
             if (favorite) {
-              resolve(res.status(200).send(Utility.formatResponse(200, { isFavorite: true })));
+              resolve(
+                res
+                  .status(200)
+                  .send(Utility.formatResponse(200, { isFavorite: true }))
+              );
             } else {
-              resolve(res.status(200).send(Utility.formatResponse(200, { isFavorite: false })));
+              resolve(
+                res
+                  .status(200)
+                  .send(Utility.formatResponse(200, { isFavorite: false }))
+              );
             }
           })
           .catch((err) => {
-            reject(res.status(500).send(Utility.formatResponse(500, err.message)));
+            reject(
+              res.status(500).send(Utility.formatResponse(500, err.message))
+            );
           });
       });
     }
 
-    return new Promise((resolve, reject) => {
-      CustomerFavouriteModel.findAndCountAll({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-      })
-        .then((list) => {
-          const { count, rows } = list;
-          if (count > 0) {
-            resolve(res.status(200).send(Utility.formatResponse(200, rows)));
-          } else {
-            resolve(
-              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
-            );
-          }
-        })
-        .catch((err) => {
-          reject(
-            res.status(500).send(Utility.formatResponse(500, err.message))
-          );
-        });
-    });
+    if (customer_id) {
+      const query = `SELECT lp.id, lp.home_image, lp.is_home, lp.title, lp.interest_rate, lp.description, 
+                      lp.short_description, lp.long_description,
+                      (Select COUNT(*) FROM customer_favourite) AS count
+                      FROM customer_favourite AS cf
+                      LEFT JOIN loan_provider AS lp ON lp.id = cf.loan_provider_id
+                      LIMIT ${limit} OFFSET ${offset}`;
+
+      return new Promise((resolve, reject) => {
+        sequelize
+          .query(query, { type: sequelize.QueryTypes.SELECT })
+          .then((fav) => {
+            fav.length > 0
+              ? resolve(res.status(200).send(Utility.formatResponse(200, fav)))
+              : resolve(
+                  res
+                    .status(404)
+                    .send(Utility.formatResponse(404, `No Data Found`))
+                );
+          })
+          .catch((err) => {
+            console.log("error==>>", err);
+            reject(res.status(500).send(Utility.formatResponse(500, err)));
+          });
+      });
+    }
   },
 
   // Remove a favourite from the database using loan_provider_id and customer_id
@@ -77,11 +94,18 @@ const CustomerFavouriteController = {
 
     return new Promise((resolve, reject) => {
       CustomerFavouriteModel.destroy({
-        where: { loan_provider_id: payload.loan_provider_id, customer_id: payload.customer_id }
+        where: {
+          loan_provider_id: payload.loan_provider_id,
+          customer_id: payload.customer_id,
+        },
       })
         .then((data) => {
           if (data) {
-            resolve(res.status(200).send(Utility.formatResponse(200, 'Removed Successfully')));
+            resolve(
+              res
+                .status(200)
+                .send(Utility.formatResponse(200, "Removed Successfully"))
+            );
           } else {
             resolve(
               res.status(404).send(Utility.formatResponse(404, `No Data Found`))
@@ -94,7 +118,7 @@ const CustomerFavouriteController = {
           );
         });
     });
-  }
+  },
 };
 
 module.exports = CustomerFavouriteController;
