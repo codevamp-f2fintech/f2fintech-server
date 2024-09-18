@@ -19,6 +19,8 @@ const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
 
 const { checkAuthenticated } = require("../../config/passportConfig");
+const QueryController = require("../../controller/query");
+const QueryResponseController = require("../../controller/query_response");
 
 const router = express.Router();
 
@@ -95,6 +97,15 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+//-----------------------------------QUERY---------------------------------------
+router.post("/create-query", QueryController.createQuery);
+router.get("/get-query", QueryController.getQueries);
+
+//-----------------------------------QUERY RESPONSE---------------------------------------
+router.post("/create-query-response", QueryResponseController.createQueryResponse);
+router.get("/get-query-response", QueryResponseController.getQueryResponse);
+router.put("/update-query-response", QueryResponseController.updateQueryResponse);
 
 //-----------------------------------RATING AND REVIEW---------------------------------------
 router.get("/get-rating", CustomerReviewController.getCustomerReview);
