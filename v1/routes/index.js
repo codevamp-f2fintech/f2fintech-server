@@ -48,17 +48,6 @@ router.get(
   CustomerDocumentController.getCustomerProfilePhoto
 );
 
-//-----------------------------------QUERY---------------------------------------
-router.post("/create-query", QueryController.createQuery);
-router.get("/get-query", QueryController.getQueries);
-
-
-//-----------------------------------QUERY RESPONSE---------------------------------------
-router.post("/create-query-response", QueryResponseController.createQueryResponse);
-router.get("/get-query-response", QueryResponseController.getQueryResponse);
-router.put("/update-query-response", QueryResponseController.updateQueryResponse);
-
-
 // --------------------------------CUSTOMER FAVOURITE-------------------------------------
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
 router.get("/get-favourite", CustomerFavouriteController.getFavourite);
@@ -107,6 +96,15 @@ router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 //-----------------------------------NOTIFICATIONS---------------------------------------
 router.get("/get-notifications", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+
+//-----------------------------------QUERY---------------------------------------
+router.post("/create-query", QueryController.createQuery);
+router.get("/get-query", QueryController.getQueries);
+
+//-----------------------------------QUERY RESPONSE---------------------------------------
+router.post("/create-query-response", QueryResponseController.createQueryResponse);
+router.get("/get-query-response", QueryResponseController.getQueryResponse);
+router.put("/update-query-response", QueryResponseController.updateQueryResponse);
 
 //-----------------------------------RATING AND REVIEW---------------------------------------
 router.get("/get-rating", CustomerReviewController.getCustomerReview);

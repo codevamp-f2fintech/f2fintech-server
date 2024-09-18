@@ -19,7 +19,6 @@ const QueryController = {
                     resolve(res.status(200).send(Utility.formatResponse(200, result)));
                 })
                 .catch((err) => {
-                    console.log('err', err)
                     reject(res.status(500).send(Utility.formatResponse(500, err)));
                 });
         });
@@ -29,7 +28,6 @@ const QueryController = {
         const { limit = 10, offset = 0, customer_id } = req.query;
         return new Promise((resolve, reject) => {
             const where = customer_id ? { customer_id: customer_id } : {};
-            console.log("customer_id", customer_id)
             QueryModel.findAndCountAll({
                 where: where,
                 order: [
@@ -72,30 +70,6 @@ const QueryController = {
                     } else {
                         resolve(
                             res.status(200).send(Utility.formatResponse(200, "Update Successful"))
-                        );
-                    }
-                })
-                .catch((err) => {
-                    reject(res.status(500).send(Utility.formatResponse(500, err)));
-                });
-        });
-    },
-
-    deleteQuery: (req, res) => {
-        const { id } = req.params;
-
-        return new Promise((resolve, reject) => {
-            QueryModel.destroy({
-                where: { id: id },
-            })
-                .then((result) => {
-                    if (result === 0) {
-                        resolve(
-                            res.status(404).send(Utility.formatResponse(404, "No Data Found"))
-                        );
-                    } else {
-                        resolve(
-                            res.status(200).send(Utility.formatResponse(200, "Delete Successful"))
                         );
                     }
                 })

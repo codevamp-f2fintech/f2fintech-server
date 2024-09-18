@@ -19,7 +19,6 @@ const QueryResponseController = {
                     resolve(res.status(200).send(Utility.formatResponse(200, result)));
                 })
                 .catch((err) => {
-                    console.log('err', err)
                     reject(res.status(500).send(Utility.formatResponse(500, err)));
                 });
         });
@@ -58,7 +57,6 @@ const QueryResponseController = {
 
     updateQueryResponse: (req, res) => {
         const payload = req.body;
-        console.log(payload, "payload")
 
         return new Promise((resolve, reject) => {
             QueryResponseModel.update(payload, {

@@ -164,6 +164,7 @@ const Utility = {
    * Formatting the response with status code
    * @param {Integer} statusCode
    * @param {Object/String} res
+   * @param {Integer} count
    * @return {Object} formatted api response
    */
 

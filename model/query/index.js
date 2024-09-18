@@ -25,7 +25,6 @@ const QueryModel = sequelize.define(
         },
         attachment: {
             type: Sequelize.STRING,
-
         },
         status: {
             type: Sequelize.ENUM,
