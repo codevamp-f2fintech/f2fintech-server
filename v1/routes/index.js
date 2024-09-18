@@ -48,9 +48,10 @@ router.get(
   CustomerDocumentController.getCustomerProfilePhoto
 );
 
-// --------------------------------CUSTOMER FAVOURITE-------------------------------------
+//--------------------------------CUSTOMER FAVOURITE-------------------------------------
+router.post("/get-favourites", CustomerFavouriteController.getFavourites);
 router.post("/create-favourite", CustomerFavouriteController.createFavourite);
-router.get("/get-favourite", CustomerFavouriteController.getFavourite);
+router.post("/remove-favourite", CustomerFavouriteController.removeFavourite);
 
 //-----------------------------------CUSTOMER INFO---------------------------------------
 router.post("/create-customer-info", CustomerInfoController.createCustomerInfo);
@@ -109,5 +110,6 @@ router.put("/update-query-response", QueryResponseController.updateQueryResponse
 //-----------------------------------RATING AND REVIEW---------------------------------------
 router.get("/get-rating", CustomerReviewController.getCustomerReview);
 router.post("/create-rating", CustomerReviewController.createCustomerReview);
+
 
 module.exports = router;
