@@ -16,7 +16,7 @@ const CustomerApplicationController = {
     return new Promise((resolve, reject) => {
       CustomerLoanApplication.create(payload)
         .then((result) => {
-          resolve(res.status(200).send(Utility.formatResponse(200, result.id)));
+          resolve(res.status(200).send(Utility.formatResponse(200, { applicationId: result.id })));
         })
         .catch((err) => {
           reject(res.status(500).send(Utility.formatResponse(500, err)));
@@ -54,7 +54,10 @@ const CustomerApplicationController = {
     const { id } = req.params;
 
     return new Promise((resolve, reject) => {
-      CustomerLoanApplication.findOne({ where: { customer_id: id } })
+      CustomerLoanApplication.findOne({
+        where: { customer_id: id },
+        order: [['application_date', 'DESC']]
+      })
         .then((data) => {
           if (data) {
             resolve(res.status(200).send(Utility.formatResponse(200, data)));

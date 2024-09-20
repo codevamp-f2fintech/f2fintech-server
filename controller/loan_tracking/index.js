@@ -10,6 +10,22 @@ const LoanTrackingModel = require("../../model/loan_tracking");
 const Utility = require("../../utility");
 
 const LoanTrackingController = {
+
+  createLoanTracking: (req, res) => {
+    const payload = req.body;
+
+    return new Promise((resolve, reject) => {
+      LoanTrackingModel.create(payload)
+        .then((loanTracking) => {
+          resolve(res.status(200).send(Utility.formatResponse(200, loanTracking)));
+        })
+        .catch((err) => {
+          console.error("Error creating loan provider:", err);
+          reject(res.status(500).send(Utility.formatResponse(500, err)));
+        });
+    });
+  },
+
   getLoanTracking: (req, res) => {
     const { limit = 5, offset = 0 } = req.body; // default values
     return new Promise((resolve, reject) => {
@@ -32,20 +48,30 @@ const LoanTrackingController = {
     });
   },
 
-  createLoanTracking: (req, res) => {
-    const payload = req.body;
+  getLoanTrackingById: (req, res) => {
+    const { id } = req.params;
 
     return new Promise((resolve, reject) => {
-      LoanTrackingModel.create(payload)
-        .then((loanTracking) => {
-          resolve(res.status(200).send(Utility.formatResponse(200, loanTracking)));
+      LoanTrackingModel.findOne({
+        where: { customer_application_id: id },
+        order: [['updated_at', 'DESC']]
+      })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, data)));
+          } else {
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+            );
+          }
         })
         .catch((err) => {
-          console.error("Error creating loan provider:", err);
-          reject(res.status(500).send(Utility.formatResponse(500, err)));
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
         });
     });
-  },
+  }
 };
 
 module.exports = LoanTrackingController;

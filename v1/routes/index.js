@@ -17,10 +17,10 @@ const CustomerApplicationController = require("../../controller/customer_applica
 const LoanProviderController = require("../../controller/loan_provider");
 const LoanTrackingController = require("../../controller/loan_tracking");
 const NotificationController = require("../../controller/notification");
-
-const { checkAuthenticated } = require("../../config/passportConfig");
 const QueryController = require("../../controller/query");
 const QueryResponseController = require("../../controller/query_response");
+
+const { checkAuthenticated } = require("../../config/passportConfig");
 
 const router = express.Router();
 
@@ -42,7 +42,6 @@ router.post("/login", CustomerController.loginCustomer);
 //---------------------------------CUSTOMER DOCUMENT------------------------------------
 router.post("/create-document", CustomerDocumentController.createDocument);
 router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
-
 router.get(
   "/get-customer-document/:id",
   CustomerDocumentController.getCustomerProfilePhoto
@@ -57,7 +56,6 @@ router.post("/remove-favourite", CustomerFavouriteController.removeFavourite);
 router.post("/create-customer-info", CustomerInfoController.createCustomerInfo);
 router.get("/get-customer-info", CustomerInfoController.getCustomerInfo);
 router.get("/customer-info/:id", CustomerInfoController.getCustomerInfoById);
-
 router.get("/get-customer-profile/:id", CustomerController.getCustomerProfile);
 router.post("/reset-password", CustomerController.resetPassword);
 router.post(
@@ -92,6 +90,7 @@ router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
 
 //-----------------------------------LOAN TRACKING---------------------------------------
 router.get("/get-loan-tracking", LoanTrackingController.getLoanTracking);
+router.get("/get-loan-tracking-by-id/:id", LoanTrackingController.getLoanTrackingById);
 router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 
 //-----------------------------------NOTIFICATIONS---------------------------------------
@@ -106,10 +105,5 @@ router.get("/get-query", QueryController.getQueries);
 router.post("/create-query-response", QueryResponseController.createQueryResponse);
 router.get("/get-query-response", QueryResponseController.getQueryResponse);
 router.put("/update-query-response", QueryResponseController.updateQueryResponse);
-
-//-----------------------------------RATING AND REVIEW---------------------------------------
-router.get("/get-rating", CustomerReviewController.getCustomerReview);
-router.post("/create-rating", CustomerReviewController.createCustomerReview);
-
 
 module.exports = router;
