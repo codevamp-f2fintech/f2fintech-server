@@ -6,7 +6,8 @@
  * restrictions set forth in your license agreement with F2 FINTECH.
  */
 
-const AWS = require("aws-sdk");
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -65,17 +66,16 @@ const Utility = {
     });
   },
 
-  // upload the document to s3 bucket
-  uploadToS3: (folder, file, res) => {
-    // Set the region and access keys
-    AWS.config.update({
+  // upload the document to aws s3 bucket
+  uploadToS3: async (folder, file, res) => {
+    // Initialize an S3 client instance
+    const s3Client = new S3Client({
       region: region,
-      accessKeyId: accessKey,
-      secretAccessKey: secretKey,
+      credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey,
+      },
     });
-
-    // Create a new instance of the S3 class
-    const s3 = new AWS.S3();
 
     // Set the parameters for the file you want to upload
     const params = {
@@ -85,26 +85,21 @@ const Utility = {
       ContentType: file.mimetype,
     };
 
-    // Upload the file to S3
-    return s3.upload(params, (err, data) => {
-      if (err) {
-        console.log("Error uploading file:", err);
-        return res
-          .status(500)
-          .send(
-            Utility.formatResponse(
-              500,
-              "Error occurred while uploading the file"
-            )
-          );
-      } else {
-        console.log(
-          "File uploaded successfully. File location:",
-          data.Location
-        );
-        return res.status(200).send(Utility.formatResponse(200, data.Location));
-      }
-    });
+    try {
+      // Upload the file to S3 using the PutObjectCommand
+      const data = await s3Client.send(new PutObjectCommand(params));
+
+      // The uploaded file URL will need to be manually constructed since v3 doesn't directly return a location
+      const fileLocation = `https://${bucketName}.s3.${region}.amazonaws.com/${folder}`;
+
+      console.log('File uploaded successfully. File location:', fileLocation);
+      return res.status(200).send(Utility.formatResponse(200, fileLocation));
+    } catch (err) {
+      console.log('Error uploading file:', err);
+      return res.status(500).send(
+        Utility.formatResponse(500, 'Error occurred while uploading the file')
+      );
+    }
   },
 
   /** Middleware to verify 'x-access-token' header in the incoming request.

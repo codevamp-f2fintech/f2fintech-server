@@ -92,6 +92,7 @@ router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
 
 //-----------------------------------LOAN TRACKING---------------------------------------
 router.get("/get-loan-tracking", LoanTrackingController.getLoanTracking);
+router.get("/get-loan-tracking-by-id/:id", LoanTrackingController.getLoanTrackingById);
 router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 
 //-----------------------------------NOTIFICATIONS---------------------------------------
