@@ -23,6 +23,9 @@ const QueryResponseModel = sequelize.define(
         type_id: {
             type: Sequelize.INTEGER,
         },
+        attachment: {
+            type: Sequelize.STRING,
+        },
         response: {
             type: Sequelize.STRING,
         },
