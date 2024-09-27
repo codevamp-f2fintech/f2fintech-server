@@ -35,10 +35,10 @@ const CustomerApplication = sequelize.define(
       type: Sequelize.INTEGER,
     },
     application_date: {
-      type: Sequelize.DATE,
+      type: "Timestamp",
     },
     start_date: {
-      type: Sequelize.DATE,
+      type: "Timestamp",
     },
     end_date: {
       type: Sequelize.DATE,
