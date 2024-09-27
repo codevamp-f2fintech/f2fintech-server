@@ -39,7 +39,7 @@ const QueryController = {
                 .then((list) => {
                     const { count, rows } = list;
                     if (count > 0) {
-                        resolve(res.status(200).send(Utility.formatResponse(200, rows,)));
+                        resolve(res.status(200).send(Utility.formatResponse(200, rows, count)));
                     } else {
                         resolve(
                             res.status(404).send(Utility.formatResponse(404, "No Data Found"))
