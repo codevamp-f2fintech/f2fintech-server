@@ -31,7 +31,7 @@ const CustomerInfoModel = sequelize.define(
     },
     occupation_type: {
       type: Sequelize.ENUM,
-      values: ["business", "salaried"],
+      values: ['salaried', 'non-salaried', 'professional'],
     },
     occupation: {
       type: Sequelize.STRING,
