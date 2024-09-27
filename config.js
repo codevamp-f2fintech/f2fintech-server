@@ -31,5 +31,5 @@ module.exports = {
   S3_PATHNAME:
     process.env.S3_PATHNAME ||
     "https://f2fintechcustomerdoc.s3.ap-southeast-1.amazonaws.com/",
-  SENDER_EMAIL: process.env.SENDER_EMAIL
+  SENDER_EMAIL: process.env.SENDER_EMAIL || 'atechno27@gmail.com'
 };
