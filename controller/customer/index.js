@@ -7,9 +7,12 @@
  */
 
 const passport = require("passport");
-
 const CustomerModel = require("../../model/customer");
 const sendEmail = require("../../utility/email");
+const {
+  getResetPasswordEmailOptions,
+  getWelcomeEmailOptions,
+} = require("../../email/templates/emailTemplates");
 const Utility = require("../../utility");
 
 const login = (req, res, next) => {
@@ -42,74 +45,29 @@ const CustomerController = {
     const payload = req.body;
 
     return new Promise((resolve, reject) => {
-      if (payload.password) {
-        Utility.createHash(payload.password)
-          .then((hash) => {
-            payload.password = hash;
-            CustomerModel.create({ ...payload })
-              .then((customer) => {
-                const token = Utility.getSignedToken(customer.id);
-                resolve(
-                  res
-                    .status(200)
-                    .send(
-                      Utility.formatResponse(200, { token, id: customer.id })
-                    )
-                );
-              })
-              .catch((err) => {
-                reject(res.status(500).send(Utility.formatResponse(500, err)));
-              });
-          })
-          .catch((err) => {
-            reject(res.status(500).send(Utility.formatResponse(500, err)));
-          });
-      } else {
-        CustomerModel.create({ ...payload })
-          .then((customer) => {
-            // make a func -sendemail under utility file keep
-            const mailOptions = {
-              from: "rituanuragi1@gmail.com",
-              to: payload.email,
-              subject: "Welcome to F2 Fintech - Reset Your Password",
-              html: `
-               
-               <div style="background-color: #f9f9f9; padding: 10px;">
-              <div
-                style="max-width: 600px; margin: auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <div style="text-align: center; margin-bottom: 10px; margin-right:0px">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvsW7BlfVZmbNX3uaGdcdmdVd_zsaapbNpww&s" alt="F2 Fintech Logo" style="max-width: 100px;" />
-            </div>
-           
-
-                <p style="font-size: 18px; color: #2c3ce3;">Hello <b>${payload.name}!</b></p>
-                <p style="font-size: 16px; color: #555;">We're glad to have you on board at F2 Fintech.</p>
-                <p style="font-size: 16px; color: #555;">We have created your user account with the entered contact number.</p>
-                <p style="font-size: 16px; text-align: center; margin: 20px 0;">
-                <a href="http://localhost:5173/reset-password" 
-               style="color: #ffffff; background-color: #2c3ce3; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block;">
-              Kindly Reset Your Password By Clicking Here
-            </a>
-          </p>
-                <br />
-                <p style="font-size: 16px; color: #555;">Thanks and Regards,<br />F2 Fintech</p>
-              </div>
-            </div>
-              `,
-            };
-
-            sendEmail(mailOptions);
-            const token = Utility.getSignedToken(customer.id);
-            resolve(
-              res
-                .status(200)
-                .send(Utility.formatResponse(200, { token, id: customer.id }))
-            );
-          })
-          .catch((err) => {
-            reject(res.status(500).send(Utility.formatResponse(500, err)));
-          });
-      }
+      Utility.createHash(payload.password)
+        .then((hash) => {
+          payload.password = hash;
+          CustomerModel.create({ ...payload })
+            .then((customer) => {
+              const welcomeMailOptions = getWelcomeEmailOptions(payload);
+              sendEmail(welcomeMailOptions).catch((err) =>
+                console.error("Error sending welcome email:", err)
+              );
+              const token = Utility.getSignedToken(customer.id);
+              resolve(
+                res
+                  .status(200)
+                  .send(Utility.formatResponse(200, { token, id: customer.id }))
+              );
+            })
+            .catch((err) => {
+              reject(res.status(500).send(Utility.formatResponse(500, err)));
+            });
+        })
+        .catch((err) => {
+          reject(res.status(500).send(Utility.formatResponse(500, err)));
+        });
     });
   },
 

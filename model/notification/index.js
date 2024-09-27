@@ -20,11 +20,16 @@ const NotificationModel = sequelize.define(
       type: Sequelize.STRING,
     },
     type: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM,
+      values: ['loan', 'query', 'general'],
     },
     status: {
       type: Sequelize.ENUM,
-      values: ['pending', 'sent', 'error']
+      values: ['pending', 'sent', 'error', 'read'],
+      defaultValue: 'pending'
+    },
+    created_at: {
+      type: "Timestamp",
     },
   },
   {

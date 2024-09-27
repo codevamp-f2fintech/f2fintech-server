@@ -94,8 +94,11 @@ router.get("/get-loan-tracking-by-id/:id", LoanTrackingController.getLoanTrackin
 router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 
 //-----------------------------------NOTIFICATIONS---------------------------------------
-router.get("/get-notifications", NotificationController.getNotifications);
+router.get("/get-notifications/:id", NotificationController.getNotifications);
 router.post("/create-notification", NotificationController.createNotification);
+router.get("/mark-notification-read/:id", NotificationController.markAsRead);
+router.get("/mark-all-notifications-read/:userId", NotificationController.markAllAsRead);
+
 
 //-----------------------------------QUERY---------------------------------------
 router.post("/create-query", QueryController.createQuery);
