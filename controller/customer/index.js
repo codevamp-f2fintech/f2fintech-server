@@ -14,6 +14,8 @@ const {
   getWelcomeEmailOptions,
 } = require("../../email/templates/emailTemplates");
 const Utility = require("../../utility");
+const sequelize = require("../../sequelize");
+const CustomerApplicationModel = require("../../model/customer_application");
 
 const login = (req, res, next) => {
   return new Promise((resolve, reject) => {
@@ -116,19 +118,58 @@ const CustomerController = {
   },
 
   getCustomer: (req, res) => {
-    const { limit = 10, offset = 0 } = req.body; // default values
+    const { limit = 10, offset = 0 } = req.body;
+
+    const query = `
+      SELECT 
+        c.id, 
+        c.name, 
+        c.email, 
+        c.contact, 
+        c.gender, 
+        c.status, 
+        c.created_at, 
+        ca.amount, 
+        ca.tenure
+      FROM 
+        customer AS c
+      JOIN 
+        customer_application AS ca 
+      ON 
+        c.id = ca.customer_id
+      LIMIT :limit OFFSET :offset
+    `;
+
+    sequelize
+      .query(query, {
+        replacements: {
+          limit: parseInt(limit, 10),
+          offset: parseInt(offset, 10),
+        },
+        type: sequelize.QueryTypes.SELECT,
+      })
+      .then((customers) => {
+        if (customers.length > 0) {
+          res.status(200).send(Utility.formatResponse(200, { customers }));
+        } else {
+          res.status(404).send(Utility.formatResponse(404, `No Data Found`));
+        }
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+        res.status(500).send(Utility.formatResponse(500, err.message));
+      });
+  },
+
+  //get customer by its id from database
+  getCustomerById: (req, res) => {
+    const { id } = req.params;
 
     return new Promise((resolve, reject) => {
-      CustomerModel.findAndCountAll({
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-      })
-        .then((list) => {
-          const { count, rows } = list;
-          if (count > 0) {
-            resolve(
-              res.status(200).send(Utility.formatResponse(200, { count, rows }))
-            );
+      CustomerModel.findOne({ where: { id } })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, data)));
           } else {
             resolve(
               res.status(404).send(Utility.formatResponse(404, `No Data Found`))
@@ -144,7 +185,7 @@ const CustomerController = {
   },
 
   getCustomerProfile: (req, res) => {
-    const { id } = req.params; // default values
+    const { id } = req.params;
 
     return new Promise((resolve, reject) => {
       CustomerModel.findByPk(id)

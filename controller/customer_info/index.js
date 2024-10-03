@@ -51,7 +51,7 @@ const CustomerInfoController = {
   getCustomerInfoById: (req, res) => {
     const id = req.params.id;
     return new Promise((resolve, reject) => {
-      CustomerInfoModel.findByPk(id)
+      CustomerInfoModel.findOne({ where: { customer_id: id } })
         .then((result) => {
           if (result) {
             resolve(res.status(200).send(Utility.formatResponse(200, result)));

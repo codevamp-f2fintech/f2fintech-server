@@ -25,12 +25,12 @@ const CustomerApplicationController = {
   },
 
   getApplications: (req, res) => {
-    const { limit = 10, offset = 0 } = req.body; // default values
+    const { offset = 0 } = req.body;
 
     return new Promise((resolve, reject) => {
       CustomerLoanApplication.findAndCountAll({
-        limit: parseInt(limit),
         offset: parseInt(offset),
+        order: [["application_date", "ASC"]],
       })
         .then((list) => {
           const { count, rows } = list;
