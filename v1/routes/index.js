@@ -36,11 +36,16 @@ router.patch(
   checkAuthenticated,
   CustomerController.updateCustomer
 );
-router.get("/get-customer", checkAuthenticated, CustomerController.getCustomer);
+router.get("/get-customer", CustomerController.getCustomer);
+router.get("/get-customer/:id", CustomerController.getCustomerById);
 router.post("/login", CustomerController.loginCustomer);
 
 //---------------------------------CUSTOMER DOCUMENT------------------------------------
 router.post("/create-document", CustomerDocumentController.createDocument);
+router.get(
+  "/get-customer-documents/:id",
+  CustomerDocumentController.getDocuments
+);
 router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
 router.get(
   "/get-customer-document/:id",
@@ -75,10 +80,7 @@ router.post(
   "/create-application",
   CustomerApplicationController.createApplication
 );
-router.get(
-  "/get-applications",
-  CustomerApplicationController.getApplications
-);
+router.get("/get-applications", CustomerApplicationController.getApplications);
 router.get(
   "/get-application-by-id/:id",
   CustomerApplicationController.getApplicationById
@@ -90,7 +92,10 @@ router.post("/create-loan-provider", LoanProviderController.createLoanProvider);
 
 //-----------------------------------LOAN TRACKING---------------------------------------
 router.get("/get-loan-tracking", LoanTrackingController.getLoanTracking);
-router.get("/get-loan-tracking-by-id/:id", LoanTrackingController.getLoanTrackingById);
+router.get(
+  "/get-loan-tracking-by-id/:id",
+  LoanTrackingController.getLoanTrackingById
+);
 router.post("/create-loan-tracking", LoanTrackingController.createLoanTracking);
 
 //-----------------------------------NOTIFICATIONS---------------------------------------

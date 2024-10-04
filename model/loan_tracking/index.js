@@ -24,11 +24,11 @@ const LoanTrackingModel = sequelize.define(
         "approved",
         "hold",
         "disbursed",
-        "rejected"
+        "rejected",
       ],
     },
     updated_at: {
-      type: 'Timestamp',
+      type: "Timestamp",
     },
   },
   {

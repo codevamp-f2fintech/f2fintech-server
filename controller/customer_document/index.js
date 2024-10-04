@@ -24,6 +24,38 @@ const CustomerDocumentController = {
     });
   },
 
+  // get customer documents from db
+  getDocuments: (req, res) => {
+    const { limit = 10, offset = 0 } = req.body;
+    const { id } = req.params;
+
+    return new Promise((resolve, reject) => {
+      CustomerDocumentModel.findAll({
+        attributes: ["document_url", "type"],
+        where: {
+          customer_id: id,
+        },
+        limit: parseInt(limit),
+        offset: parseInt(offset),
+      })
+        .then((docs) => {
+          if (docs.length > 0) {
+            console.log(docs, "here are the docs");
+            // If documents are found, send them
+            res.status(200).send(Utility.formatResponse(200, docs));
+          } else {
+            // No documents found
+            res.status(404).send(Utility.formatResponse(404, "No Data Found"));
+          }
+        })
+        .catch((err) => {
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
+        });
+    });
+  },
+
   // upload the document to s3 bucket
   uploadDocumentToS3: async (req, res) => {
     try {
@@ -71,17 +103,15 @@ const CustomerDocumentController = {
 
     return new Promise((resolve, reject) => {
       CustomerDocumentModel.findOne({
-        attributes: ['document_url'],
+        attributes: ["document_url"],
         where: {
           customer_id: id,
-          type: 'profile'
-        }
+          type: "photo",
+        },
       })
         .then((profile) => {
           if (profile) {
-            resolve(
-              res.status(200).send(Utility.formatResponse(200, profile))
-            );
+            resolve(res.status(200).send(Utility.formatResponse(200, profile)));
           } else {
             resolve(
               res.status(404).send(Utility.formatResponse(404, `No Data Found`))
@@ -94,7 +124,7 @@ const CustomerDocumentController = {
           );
         });
     });
-  }
+  },
 };
 
 module.exports = CustomerDocumentController;

@@ -29,7 +29,7 @@ const LoanProviderModel = sequelize.define(
       type: Sequelize.STRING,
     },
     title: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     interest_rate: {
       type: Sequelize.STRING,
@@ -51,7 +51,7 @@ const LoanProviderModel = sequelize.define(
     },
     document_required: {
       type: Sequelize.STRING,
-    }
+    },
   },
   {
     freezeTableName: true,

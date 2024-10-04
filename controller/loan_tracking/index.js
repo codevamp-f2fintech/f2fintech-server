@@ -27,7 +27,7 @@ const LoanTrackingController = {
   },
 
   getLoanTracking: (req, res) => {
-    const { limit = 5, offset = 0 } = req.body; // default values
+    const { limit = 5, offset = 0 } = req.body;
     return new Promise((resolve, reject) => {
       LoanTrackingModel.findAndCountAll({
         limit: parseInt(limit),
@@ -36,9 +36,13 @@ const LoanTrackingController = {
         .then((list) => {
           const { count, rows } = list;
           if (count > 0) {
-            resolve(res.status(200).send(Utility.formatResponse(200, { count, rows })));
+            resolve(
+              res.status(200).send(Utility.formatResponse(200, { count, rows }))
+            );
           } else {
-            resolve(res.status(404).send(Utility.formatResponse(404, "No Data Found")));
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, "No Data Found"))
+            );
           }
         })
         .catch((err) => {
