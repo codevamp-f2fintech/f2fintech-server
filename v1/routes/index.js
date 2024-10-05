@@ -85,6 +85,10 @@ router.get(
   "/get-application-by-id/:id",
   CustomerApplicationController.getApplicationById
 );
+router.get(
+  "/get-applications/:applicationId",
+  CustomerApplicationController.getApplicationsByApplicationId
+);
 
 //-----------------------------------LOAN PROVIDER---------------------------------------
 router.get("/get-loan-provider", LoanProviderController.getLoanProvider);

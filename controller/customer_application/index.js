@@ -74,6 +74,31 @@ const CustomerApplicationController = {
         });
     });
   },
+
+  getApplicationsByApplicationId: (req, res) => {
+    const { applicationId } = req.params;
+
+    return new Promise((resolve, reject) => {
+      CustomerLoanApplication.findAll({
+        where: { id: applicationId },
+        order: [['application_date', 'DESC']]
+      })
+        .then((data) => {
+          if (data) {
+            resolve(res.status(200).send(Utility.formatResponse(200, data)));
+          } else {
+            resolve(
+              res.status(404).send(Utility.formatResponse(404, `No Data Found`))
+            );
+          }
+        })
+        .catch((err) => {
+          reject(
+            res.status(500).send(Utility.formatResponse(500, err.message))
+          );
+        });
+    });
+  }
 };
 
 module.exports = CustomerApplicationController;
