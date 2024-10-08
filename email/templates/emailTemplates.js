@@ -16,7 +16,7 @@ const getWelcomeEmailOptions = (payload) => {
             <p style="font-size: 16px; color: #555;">We're glad to have you on board at F2 Fintech.</p>
             <p style="font-size: 16px; color: #555;">We have created your user account with the entered contact number.</p>
             <p style="text-align: center; margin: 20px 0;">
-            <a href="http://localhost:5173/login" 
+            <a href="https://web.f2fintech.in/login" 
                style="
             display: inline-block;
             padding: 10px 20px;
@@ -56,7 +56,7 @@ const getResetPasswordEmailOptions = (payload) => {
             <p style="font-size: 16px; color: #555;">We have created your account with us.</p>
             <p style="font-size: 16px; color: #555;">Please set your password by clicking the button below:</p>
             <p style="text-align: center; margin: 20px 0;">
-              <a href="http://localhost:5173/reset-password" 
+              <a href="https://web.f2fintech.in/reset-password" 
                  style="color: #ffffff; background-color: #2c3ce3; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block;">
                 Reset Your Password
               </a>
