@@ -34,6 +34,9 @@ const CustomerApplication = sequelize.define(
     emi_count: {
       type: Sequelize.INTEGER,
     },
+    is_picked: {
+      type: Sequelize.TINYINT,
+    },
     application_date: {
       type: "Timestamp",
     },
