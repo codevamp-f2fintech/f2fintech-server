@@ -82,6 +82,7 @@ const CustomerDocumentController = {
         "text/plain",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
         "application/msword", // .doc
+        "application/pdf" // .pdf
       ];
 
       if (!allowedMimeTypes.includes(document.mimetype)) {
