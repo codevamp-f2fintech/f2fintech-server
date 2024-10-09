@@ -93,13 +93,12 @@ const CustomerDocumentController = {
 
       Utility.uploadToS3(folder, document, res);
     } catch (err) {
-      console.log("err>>", err);
       res.status(500).send(Utility.formatResponse(500, err));
     }
   },
 
-  // Get profile photo from database.
-  getCustomerProfilePhoto: (req, res) => {
+  // Get profile image from database.
+  getCustomerProfileImage: (req, res) => {
     const { id } = req.params;
 
     return new Promise((resolve, reject) => {
@@ -107,7 +106,7 @@ const CustomerDocumentController = {
         attributes: ["document_url"],
         where: {
           customer_id: id,
-          type: "photo",
+          type: "profile",
         },
       })
         .then((profile) => {

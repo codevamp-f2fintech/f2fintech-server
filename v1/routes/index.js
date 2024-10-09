@@ -49,7 +49,7 @@ router.get(
 router.post("/upload-to-s3", CustomerDocumentController.uploadDocumentToS3);
 router.get(
   "/get-customer-document/:id",
-  CustomerDocumentController.getCustomerProfilePhoto
+  CustomerDocumentController.getCustomerProfileImage
 );
 
 //--------------------------------CUSTOMER FAVOURITE-------------------------------------
