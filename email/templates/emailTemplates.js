@@ -15,12 +15,32 @@ const getWelcomeEmailOptions = (customer, pw) => {
             <p style="font-size: 18px; color: #2c3ce3;">Hello <b>${customer.name}!</b></p>
             <p style="font-size: 16px; color: #555;">We're glad to have you on board at F2 Fintech.</p>
             <p style="font-size: 16px; color: #555;">We have created your account with us.</p>
-            <p style="font-size: 16px; color: #555;">Here are the login credentials: <br />Contact Number : ${customer.contact} <br /> </p>
+            <p style="font-size: 16px; color: #555;">Here are the login credentials: <br />Contact Number : ${customer.contact} </p>
             <p style="font-size: 16px; color: #555;">Password       : ${pw} </p>
-            <p style="font-size: 16px; color: #555;">Click the link below to go to login page</p>
-            <p style="text-align: center; margin: 20px 0;">
-            <a href="https://web.f2fintech.in/login" 
+            <p style="font-size: 16px; color: #555;">Click the button below to go to login page</p>
+            <p style="margin: 20px 0;">
+            <a href="https://f2fintech-web.netlify.app/login" 
                style="
+            display: inline-block;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #2c3ce3;
+            border-radius: 8px;
+            border: none;
+            transition: background-color 0.3s ease;
+            ">
+              Go To Login Page
+            </a>
+            </p>
+            <br />
+            <p style="font-size: 16px; color: #555;">Click the button below to reset your password</p>
+            <p style="margin: 20px 0;">
+              <a href="https://f2fintech-web.netlify.app/reset-password" 
+                 style="
             display: inline-block;
             padding: 10px 20px;
             font-family: Arial, sans-serif;
@@ -29,18 +49,9 @@ const getWelcomeEmailOptions = (customer, pw) => {
             text-decoration: none;
             color: #ffffff;
             background-color: #2c3ce3;
-            border-radius: 5px;
+            border-radius: 8px;
             border: none;
-            transition: background-color 0.3s ease;
-            ">
-              Go To Login Page
-            </a>
-            </p>
-            <br />
-            <p style="font-size: 16px; color: #555;">Click the link below to reset your password</p>
-            <p style="text-align: center; margin: 20px 0;">
-              <a href="https://web.f2fintech.in/reset-password" 
-                 style="color: #ffffff; background-color: #2c3ce3; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block;">
+            transition: background-color 0.3s ease;">
                 Go To Reset Password Page
               </a>
             </p>

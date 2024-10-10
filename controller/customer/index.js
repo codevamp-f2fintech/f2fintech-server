@@ -42,6 +42,7 @@ const login = (req, res, next) => {
 const CustomerController = {
   register: (req, res) => {
     const payload = req.body;
+    const unhashedPassword = payload.password;
 
     return new Promise((resolve, reject) => {
       Utility.createHash(payload.password)
@@ -49,7 +50,7 @@ const CustomerController = {
           payload.password = hash;
           CustomerModel.create({ ...payload })
             .then((customer) => {
-              const welcomeMailOptions = getWelcomeEmailOptions(customer, payload.password);
+              const welcomeMailOptions = getWelcomeEmailOptions(customer, unhashedPassword);
               sendEmail(welcomeMailOptions).catch((err) =>
                 console.log("Error sending welcome email:", err)
               );
