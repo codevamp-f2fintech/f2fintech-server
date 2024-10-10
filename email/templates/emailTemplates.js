@@ -1,10 +1,10 @@
 
 const config = require('../../config');
 
-const getWelcomeEmailOptions = (payload) => {
+const getWelcomeEmailOptions = (customer, pw) => {
   return {
     from: config.SENDER_EMAIL,
-    to: payload.email,
+    to: customer.email,
     subject: "Welcome to F2 Fintech!",
     html: `
         <div style="background-color: #f9f9f9; padding: 20px;">
@@ -12,9 +12,12 @@ const getWelcomeEmailOptions = (payload) => {
             <div style="text-align: center; margin-bottom: 20px;">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvsW7BlfVZmbNX3uaGdcdmdVd_zsaapbNpww&s" alt="F2 Fintech Logo" style="max-width: 100px;" />
             </div>
-            <p style="font-size: 18px; color: #2c3ce3;">Hello <b>${payload.name}!</b></p>
+            <p style="font-size: 18px; color: #2c3ce3;">Hello <b>${customer.name}!</b></p>
             <p style="font-size: 16px; color: #555;">We're glad to have you on board at F2 Fintech.</p>
-            <p style="font-size: 16px; color: #555;">We have created your user account with the entered contact number.</p>
+            <p style="font-size: 16px; color: #555;">We have created your account with us.</p>
+            <p style="font-size: 16px; color: #555;">Here are the login credentials: <br />Contact Number : ${customer.contact} <br /> </p>
+            <p style="font-size: 16px; color: #555;">Password       : ${pw} </p>
+            <p style="font-size: 16px; color: #555;">Click the link below to go to login page</p>
             <p style="text-align: center; margin: 20px 0;">
             <a href="https://web.f2fintech.in/login" 
                style="
@@ -30,9 +33,18 @@ const getWelcomeEmailOptions = (payload) => {
             border: none;
             transition: background-color 0.3s ease;
             ">
-              Go to Login Page
+              Go To Login Page
             </a>
             </p>
+            <br />
+            <p style="font-size: 16px; color: #555;">Click the link below to reset your password</p>
+            <p style="text-align: center; margin: 20px 0;">
+              <a href="https://web.f2fintech.in/reset-password" 
+                 style="color: #ffffff; background-color: #2c3ce3; padding: 12px 25px; text-decoration: none; border-radius: 25px; display: inline-block;">
+                Go To Reset Password Page
+              </a>
+            </p>
+            <br />
             <br />
             <p style="font-size: 16px; color: #555;">Thanks and Regards,<br />F2 Fintech</p>
           </div>

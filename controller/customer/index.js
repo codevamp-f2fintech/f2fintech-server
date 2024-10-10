@@ -7,15 +7,12 @@
  */
 
 const passport = require("passport");
+
 const CustomerModel = require("../../model/customer");
 const sendEmail = require("../../utility/email");
-const {
-  getResetPasswordEmailOptions,
-  getWelcomeEmailOptions,
-} = require("../../email/templates/emailTemplates");
-const Utility = require("../../utility");
 const sequelize = require("../../sequelize");
-const CustomerApplicationModel = require("../../model/customer_application");
+const Utility = require("../../utility");
+const { getWelcomeEmailOptions } = require("../../email/templates/emailTemplates");
 
 const login = (req, res, next) => {
   return new Promise((resolve, reject) => {
@@ -52,9 +49,9 @@ const CustomerController = {
           payload.password = hash;
           CustomerModel.create({ ...payload })
             .then((customer) => {
-              const welcomeMailOptions = getWelcomeEmailOptions(payload);
+              const welcomeMailOptions = getWelcomeEmailOptions(customer, payload.password);
               sendEmail(welcomeMailOptions).catch((err) =>
-                console.error("Error sending welcome email:", err)
+                console.log("Error sending welcome email:", err)
               );
               const token = Utility.getSignedToken(customer.id);
               resolve(
@@ -109,7 +106,7 @@ const CustomerController = {
             });
         })
         .catch((err) => {
-          console.error("Error updating customer: " + err);
+          console.log("Error updating customer: " + err);
           reject(
             res.status(500).send(Utility.formatResponse(500, err.message))
           );
